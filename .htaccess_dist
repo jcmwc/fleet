@@ -1,0 +1,23 @@
+Options -Indexes
+Options -Multiviews
+Options +FollowSymLinks
+SetEnv PHP_VER 5
+SetEnv REGISTER_GLOBALS 0
+RewriteEngine On
+RewriteBase /
+#RewriteRule ^userfiles/file/* /downloadfile.php?file=$1 [L]
+#RewriteRule ^userfiles/.*\.(php|php3?|phtml)$ /index.php
+#RewriteRule ^upload/.*\.(php|php3?|phtml)$ /index.php
+
+
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+
+
+# Rewrite to index.php/URL
+RewriteRule ^(.*)$ index.php/$1 [PT,L]
+#RewriteRule ^(.*)$ index.php?pathinfo=$1&id=$2 [PT,L]
+#RewriteRule ^userfiles/* index.php?pathinfo=$1&id=$2 [PT,L]
+#RewriteRule ^upload/* index.php?pathinfo=$1&id=$2 [PT,L]

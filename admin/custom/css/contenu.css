@@ -1,0 +1,38 @@
+.module, .module2{
+    width:100%;margin:0 -5px 0 -5px;background:#3da6ce;padding:5px;margin-top:10px;margin-bottom:10px;color:#FFF;
+}
+.module{
+        width:45%;min-width:300px;min-height:350px;display:inline-block;margin-left:5px;margin-right:5px;vertical-align:top;
+    }
+.module2{
+    width:100%;box-sizing:border-box;
+}
+.module2{margin:0 auto;}
+.single-article .module div, .module2 div{
+    width:100%;margin:0 auto;
+}
+.module h1,.module2 h1{
+    color:#FFF;font-family:arial;font-size:30px;padding-top:30px;padding-bottom:25px;width:90%;margin:0 auto;text-align:left;
+}
+.module h3{
+    color:#FFF;font-family:arial;font-weight:bold;font-size:14px;padding-top:30px;padding-bottom:25px;width:90%;margin:0 auto;text-align:center;text-transform:uppercase;
+}
+.module p,.module2 p{
+    color:#FFF;font-family:arial;font-weight:bold;font-size:14px;padding-bottom:40px;width:90%;margin:0 auto;text-align:justify;line-height:20px;
+}
+.module p span{
+    width:auto;padding-left:20px;padding-right:20px;text-align:center;display:block;font-family:arial;font-size:25px;line-height:26px;margin:0 auto;
+}
+.module p span.chiffre{
+    font-family:arial;font-size:105px;line-height:105px;width:auto;
+}
+.module2 h4{
+    color:#FFF;
+}
+.module2 div>div,.module2 div>img{
+    display:inline-block;vertical-align:middle;
+}
+.module2 div>img{width:30%;}
+.module2 div>div{width:60%;background:transparent;margin-left:10px;}
+.module2 div>div h4{font-size:36px;font-family:arial;line-height:36px;padding:0;margin:0;}
+.module2 div>div p{font-size:16px;font-family:arial;line-height:22px;padding:0;margin:0;}

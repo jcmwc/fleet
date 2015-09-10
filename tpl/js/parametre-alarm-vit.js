@@ -1,0 +1,11 @@
+$(document).ready(function(){$(function(){$("form").jqTransform({imgPath:"jqtransformplugin/img/"})})
+  /*
+  $('.modif_content_allvit').hide();
+  $('.modif_butt_av').click(function(){
+    $('.modif_content_allvit').show();
+  });
+  */
+  $('.cancel_butt_allvit').click(function(){
+    $('.modif_content_allvit').hide();
+  });
+});

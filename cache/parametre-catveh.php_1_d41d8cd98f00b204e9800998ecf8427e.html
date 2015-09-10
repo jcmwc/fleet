@@ -1,0 +1,130 @@
+
+<!-- DEBUT CONTAINER -->
+<div class="container">
+  <!-- DEBUT MAIN CONTENT TOP -->
+  <div class="main_content_top">
+    <div class="main_resize">
+      <div class="resize parambloc">
+        <h1 class="bcktitle ajust_title">Parametre du compte</h1>
+        <ul>
+          <li class="font-bold"><a href="#" class='active_menu02 see_more_param2'>Administration du site</a></li>
+          <div class="relative_info_bloc ss_img_bloc">
+            <div class="ss_menu">
+                          <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=default" >Agences</a></li>
+                          
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=utilisateurs" >Utilisateurs</a></li>            
+                          
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=typeslieux" >Types de lieux</a></li>
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=lieux" >Lieux</a></li>
+                                      <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=tv" >Types de véhicules</a></li>
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=catveh" class="active_menu02">Catégories de véhicules</a></li>
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=veh" >Véhicules</a></li>
+                        </div>
+            <img class="see_more_param" src="/fleet//tpl/img/plus_ico.png" alt="See more">
+          </div>
+        </ul>
+                        <ul>
+          <li class="font-bold alarmes_menu_li"><a href="#" class=' see_more_param2'>Alarmes</a></li>
+          <div class="relative_info_bloc ss_img_bloc">
+           <div class="ss_menu">
+            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=alarme" >Alarmes Sociales</a></li>
+            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=alarme2" >Alarmes Operationelles</a></li>
+            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=alarm-vit" >Alarmes de vitesse</a></li>            
+          </div>
+          <img class="see_more_param" src="/fleet//tpl/img/plus_ico.png" alt="See more">
+          </div>
+        </ul>
+                                        <ul>
+          <li class="font-bold"><a href="#" class=' see_more_param2'>Entretien</a></li>
+          <div class="relative_info_bloc ss_img_bloc">
+            <div class="ss_menu ">
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=tyentretien" >Modification des types d'entretien</a></li>
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=alarm-entretien" >Alarmes d'entretien</a></li>
+            </div>
+            <img class="see_more_param" src="/fleet//tpl/img/plus_ico.png" alt="See more">
+          </div>
+          </ul>
+                        <ul>
+          <li class="font-bold"><a href="#" class=' see_more_param2'>Gestion du compte</a></li>
+          <div class="relative_info_bloc ss_img_bloc">
+          <div class="ss_menu ">
+            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=mdp" >Modifier mon mot de passe</a></li>
+            <!--
+            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=def-pref" >Définir mes préférences</a></li>
+            -->
+          </div>
+          <img class="see_more_param" src="/fleet//tpl/img/plus_ico.png" alt="See more">
+          </div>
+          </ul>
+          <ul>
+            <li class="font-bold"><a href="#" class=' see_more_param2'>Paramètres globaux</a></li>
+            <div class="relative_info_bloc ss_img_bloc">
+            <div class="ss_menu ">
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=etat-moteur" >Personnalisation des états moteur</a></li>
+              <!-- <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=etat-sociaux" >Personnalisation des états sociaux</a></li>  -->
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=preference" >Préférences</a></li>
+            </div>
+          <img class="see_more_param" src="/fleet//tpl/img/plus_ico.png" alt="See more">
+        </div>
+        </ul>
+    </div>
+</div> 
+    <div class="main_resize backgroundbloc catveh_bloc">
+      <div class="resize clearfix">
+        <h1 class="bcktitle ajust_title title_agence">Catégories de véhicule</h1>
+        <div class="infobloc_param clearfix">
+          <div class="left font-bold">Nombres de catégories de véhicule enregistrés : 0</div>
+
+        </div>
+                <form action="#down">
+          <div class="infobloc_param02 clearfix">
+            <input id="ajout_cat_veh_button" class="right submit_butt" type="button" value="Ajouter une catégorie de véhicule">
+          </div>
+        </form>          
+      </div>
+      
+            
+      <div id="nvl_cat_veh_bloc">
+        <a name="down"></a>
+        <form id="formCatveh" name="formCatveh" action="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=catveh" method="post"onsubmit="return validerCatveh();">
+        <input type="hidden" name="mode" value="ajout" />
+        <div class="resize">
+          <h1 class="bcktitle ajust_title title_catveh">Nouvelle catégorie de véhicule</h1>
+          <div class="decale">
+            <div class="nvl_cat_veh_bloc">
+              <label for="name_cat_veh">Nom : </label>
+              <input id="name_cat_veh" type="text" name="libelle">
+            </div>
+            <div class="nvl_cat_veh_bloc">
+              <input class="ajouter_param submit_butt" type="submit" value="Ajouter">
+              <input id="cancel_cat_veh_bouton" class="annuler_param button_butt" type="button" value="Annuler">  
+            </div>
+          </div>
+        </div>
+        </form>
+      </div>
+          </div>
+  </div>
+<!-- FIN MAIN CONTENT TOP -->
+</div>
+<!-- FIN CONTAINER -->
+
+
+    </div><!-- end .main-wrapper -->
+    <script src="/fleet//tpl/js/app.js"></script>    
+    <script src="/fleet//tpl/js/parametre-catveh.js"></script>
+    <script src="/fleet//tpl/js/parametre-menu.js"></script>
+    
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<script>  
+  racineimg="/fleet/";
+  (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+  function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+  e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+  e.src='//www.google-analytics.com/analytics.js';
+  r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+  ga('create','UA-XXXXX-1');ga('send','pageview');
+</script>
+
+  </body>
+</html>

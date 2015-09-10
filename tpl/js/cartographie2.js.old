@@ -1,0 +1,63 @@
+function checkall(obj,name){
+  //alert(name)
+  if(obj.checked==true){
+    if(typeof(obj.form.elements[name].length)=="undefined"){
+      obj.form.elements[name].checked=true;
+    }else{
+      for(i=0;i<obj.form.elements[name].length;i++){
+        obj.form.elements[name][i].checked=true;
+      }
+    }
+  }else{
+    if(typeof(obj.form.elements[name].length)=="undefined"){
+      obj.form.elements[name].checked=false;
+    }else{
+      for(i=0;i<obj.form.elements[name].length;i++){
+        obj.form.elements[name][i].checked=false;
+      }
+    }
+  }
+  reloadmap();
+}
+
+function reloadmap(){
+  
+  $.getJSON(racineimg+"/tpl/script/listvehicule.php",$("#formlistvehicule").serialize())
+       .done(function( json ) {
+          //alert(json);
+          //affichage des vehicules
+          var map;
+          var marker_bounds = [];
+          $.each(json.listvehicule, function( i, item ) {
+            alert('ici');
+            //var map = new GMap2(document.getElementById("map"));
+            map = new google.maps.Map(document.getElementById("map"));
+            
+            // Ajout de la propriété "Marker" (repère personnalisé)
+            var point = new GLatLng(item.latitude, item.longitude); // Position du marker
+            // Initialisation d'un nouvel objet GIcon et de ses propriétés
+            var MonIcon = new GIcon(G_DEFAULT_ICON);
+            MonIcon.iconSize=new GSize(32,32);
+            MonIcon.iconAnchor=new GPoint(10,20);
+            MonIcon.image=racineimg+"tpl/img/sedan2.png";
+            // Affichage du marker (repère)
+            var marker = new GMarker(point,MonIcon);
+            map.addOverlay(marker);  
+            marker_bounds.push(point);  
+          });
+          
+          var latlngbounds = new google.maps.LatLngBounds();
+          for ( var i = 0; i < marker_bounds.length; i++ ) {
+             latlngbounds.extend(marker_bounds[i]);
+          }
+          map.setCenter(latlngbounds.getCenter(),6);
+          map.fitBounds(latlngbounds); 
+          //map.fitBounds();
+          //map.setCenter(new GLatLng(51.50135, -0.14184000000000002), 15);
+          
+        })
+        .fail(function( jqxhr, textStatus, error ) {
+            var err = textStatus + ", " + error;
+            console.log( "Request Failed: " + err );
+        });    
+}

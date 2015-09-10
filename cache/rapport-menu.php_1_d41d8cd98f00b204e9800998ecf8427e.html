@@ -1,0 +1,54 @@
+
+  <div class="main_resize">
+    <div class="resize param_comte">
+      <h1 class="bcktitle ajust_title">Rapport</h1>
+            <form id="compterapport_form"  action="" method="POST">
+                <input type="hidden" name="agence" value="1"/>
+                <div class="rowElem">
+          <label>Rapport :</label>
+          <select  name="template">
+            <option value="kilometrique" >Kilométrique</option>
+            <option value="compteurs" >Compteurs</option>
+            <option value="horaire" >Horaire</option>
+            <!-- <option value="entretien" >Entretien</option> -->
+            <option value="flotte" >Flotte journalier</option>
+            <option value="flotte02" >Flotte hebdomadaire</option>
+            <option value="flotte03" >Flotte mensuel</option>            
+          </select>
+        </div>
+        <div class="content_filt_submit">
+          <input class="submit_butt" type="submit" value="Valider">
+        </div>
+      </form>
+                  <form id="rapport_vehicule_form"action="" method="POST" >
+        <div class="rowElem">
+          <label>Véhicule :</label>
+          <select name="vehicule">
+                      </select>
+        </div>
+        <div class="rowElem">
+          <label>Rapport:</label>
+          <select  name="template">
+          <option value="vehicule" >Rapport journalier</option>
+          <option value="hebdo" >Rapport hebdomadaire</option>
+          <option value="mensuel" >Rapport Mensuel</option>
+          <option value="periodique" >Rapport de période</option>
+          <!--
+          <option value="detail" >Rapport détaillé</option>
+          <option value="visite" >Rapport de visite </option>
+          -->
+          </select>
+        </div>
+        <div class="content_filt_submit">
+          <input class="submit_butt" type="submit" value="Valider">
+        </div>
+      </form>
+            <div class="lien_veh_alarm_compterp">
+                <div><input id="agence_compterapport_butt" type="button" class="button_butt" value="Agence"></div>
+                        <div><input id="vehicule_compterapport_butt" type="button" class="button_butt" value="Vehicule"></div>
+                <!--
+        <div><input type="button" class="button_butt" value="Alarme" onclick="window.location='http://dev.madewithcaffeine.com/fleet/index.php/compte/rapport?template=alarme'"></div>
+        -->
+      </div>
+    </div>
+  </div>

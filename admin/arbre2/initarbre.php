@@ -1,0 +1,29 @@
+<?php
+require("../require/function.php");
+require("../require/back_include.php");
+?>
+[
+  {
+  "key":"_1",
+  "title":"<?=__name__?>",
+  "icon":"base.gif",
+  "unselectable":true,
+  "children":[
+  
+  <?php
+  listnoeud2("null",$_GET["langue_id"]);
+  ?>
+  ]
+  },
+  {
+  "key":"_2",
+  "title":"<?=$trad["Poubelle"]?>",
+  "icon":"trash.gif",
+  "unselectable":true,
+  "children":[
+  <?php
+  listnoeud2('pb',$_GET["langue_id"]);
+  ?>
+  ]
+  }
+  ]

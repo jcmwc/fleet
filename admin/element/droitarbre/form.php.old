@@ -1,0 +1,20 @@
+<?php
+$name= $tabelem[0];
+if($_GET["mode"]!="ajout"){
+  $sql="select * from gda where droits_id=12 and arbre_id=".$_GET["arbre_id"];
+  $link=query($sql);
+  $tbl_result_groupe=fetch($link);
+  $groupe_id=$tbl_result_groupe["groupe_id"];
+}
+$sql="select * from groupe where iseditorial=4 and notupdate=1 order by chiffre";
+$link=query($sql);
+while($tbl_result_groupe=fetch($link)){
+  if($_GET["mode"]=="visu"||$_GET["mode"]=="suppr"){
+    if($tbl_result["groupe_id"]==$groupe_id){
+      print $tbl_result_groupe["libelle"];
+    }
+  }else{
+    print $tbl_result_groupe["libelle"]."&nbsp;<input type=\"radio\" name=\"".$name."\" value=\"".$tbl_result_groupe["groupe_id"]."\" ".(($groupe_id==$tbl_result_groupe["groupe_id"]||($groupe_id==""&&$tbl_result_groupe["chiffre"]==0))?"checked":"")." >&nbsp;";
+  }    
+}
+?>

@@ -1,0 +1,72 @@
+.lt-ie9 .label_header {
+  display: block;
+}
+
+input[type="password"] {
+  color: #66c6f8;
+}
+
+.lt-ie9 .logo {
+  padding: 0px;
+}
+
+.lt-ie9 .uppercase_bloc span {
+  font-size: 1.5em;
+}
+
+.lt-ie9 .ss_title_style {
+  font-size: 1.3em;
+}
+
+.lt-ie9 .title_style {
+  font-size: 1.4em;
+}
+
+.lt-ie9 .parambloc h1 {
+  width: 250px !important;
+}
+
+.lt-ie9 .onglet_ajust_user {
+  padding-left: 28px;
+  padding-right: 28px;
+}
+
+.lt-ie9 .title_nv_tl {
+  width: 310px;
+}
+
+.lt-ie9 .title_catveh {
+  width: 310px;
+}
+
+.lt-ie9 .filter_info h1 {
+  width: 250px;
+}
+
+.lt-ie9 .situation_flotte h1 {
+  width: 215px;
+}
+
+.lt-ie9 .situation_flotte02 h1 {
+  width: 220px;
+}
+
+.lt-ie9 .rapport_km h1 {
+  width: 220px;
+}
+
+.lt-ie9 .alarmes_form label {
+  font-size: 1em !important;
+}
+
+.lt-ie9 .title_entretien h1 {
+  width: 335px;
+}
+
+.lt-ie9 .title_pd h1 {
+  width: 215px;
+}
+
+.lt-ie9 .form_param_lieu label {
+  font-size: 1em !important;
+}

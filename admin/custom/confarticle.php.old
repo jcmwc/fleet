@@ -1,0 +1,71 @@
+<?
+
+    switch($_GET["gabarit_id"]){
+    	case 1 :
+      //site 
+    		$tabcolonne=array(
+    		"version_id"=>"version_id|hidden",
+    		"nom du site(RSS)"=>"titre1|txt(255)|yes",
+    		"Email contact"=>"titre2|txt(255)|yes",
+    		"Dossier"=>"abstract|txt(255)|yes",
+        "Base line"=>"titre3|txt(255)|yes",
+        "Texte Our Mission"=>"titre4|area|yes",
+        "Texte contact"=>"titre5|txt(255)|yes",
+        "Téléphone"=>"abstract2|txt(255)|yes",
+        "Adresse"=>"abstract3|area|yes"
+    		);
+    		break;
+    	case 2 :
+      case 6 :    
+    	//article
+      //fine chemical list
+    		$tabcolonne=array(
+    		"version_id"=>"version_id|hidden",
+    		"Titre"=>"titre1|txt(255)|no",
+        "Logo (281*155)"=>"ext|file|yes",
+        "Titre home"=>"titre2|txt(255)|no",
+        "Tool tip home"=>"titre3|area|no",
+    		"Abstract"=>"abstract|html2(contenu.css)|no",
+        "Contenu"=>"contenu|html2(contenu.css)|no",
+        "Liste de fichier"=>"contenu|listfichier3(sqllistfile)|no",        
+        "Completement"=>"abstract2|html2(contenu.css)|no"
+    		);
+    		break;
+      case 4 :
+      case 7 :
+    	//list partner
+    		$tabcolonne=array(
+    		"version_id"=>"version_id|hidden",
+    		"Titre"=>"titre1|txt(255)|yes",
+    		"Logo (281*155)"=>"ext|file|no",
+        "Abstract"=>"abstract|html2(contenu.css)|no",
+        "Contenu"=>"contenu|html2(contenu.css)|no",
+        "Liste de fichier"=>"contenu|listfichier3(sqllistfile)|no",        
+        "Completement"=>"abstract2|html2(contenu.css)|no"
+    		);
+    		break;
+      case 5 :
+    	//partner
+    		$tabcolonne=array(
+    		"version_id"=>"version_id|hidden",
+    		"Titre"=>"titre1|txt(255)|yes",
+        "Logo (281*155)"=>"ext|file|yes",
+    		"Abstract"=>"abstract|html2(contenu.css)|no",
+        "Contenu"=>"contenu|html2(contenu.css)|no",
+        "Liste de fichier"=>"contenu|listfichier3(sqllistfile)|no",
+        "Completement"=>"abstract2|html2(contenu.css)|no"
+    		);
+    		break;
+    	default :
+    	//default
+    		$tabcolonne=array(
+    		"version_id"=>"version_id|hidden",
+    		"Titre"=>"titre1|txt(255)|yes"
+    		);
+    		break;
+		}	
+    $tabcolonne["SEO"]="delim";
+    $tabcolonne["Meta title"]="titleseo|txt(90)|no";
+    $tabcolonne["Meta description"]="abstractseo|area|no";
+    $tabcolonne["Meta robots"]="robotseo|radio3(index,follow;index,nofollow;noindex,nofollow)|no";
+?>

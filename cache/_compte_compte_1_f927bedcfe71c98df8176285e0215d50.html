@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="fr" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="fr" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="fr" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="fr" class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>mister fleet | situation</title>
+    <meta name="description" content="">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="stylesheet" href="/fleet//tpl/css/screen.css">
+
+
+    <!--[if lte IE 8]><link rel="stylesheet" href="/fleet//tpl/css/ie.css"><![endif]-->
+    <script src="/fleet//tpl/js/modernizr.min.js"></script>
+    
+    
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyC4e8Gsf4BE6SVuZmt7PSdUGXnan-gBx4I"></script>
+    <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&client=gme-rubycom"></script> -->
+    
+    <link href='http://fonts.googleapis.com/css?family=Economica:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='/fleet//tpl/fancybox/jquery.fancybox.css' rel='stylesheet' type='text/css'>
+
+
+  </head>
+  <body>
+        <div class="main-wrapper">
+    <div class="header header-mobile">
+      <div class="logo-mobile">
+        <a href="http://dev.madewithcaffeine.com/fleet/index.php" class="link-home-mobile"><img alt="Logo Mister fleet" src="/fleet//tpl/img/logo-mobile.png"></a>
+
+        <a href="#" class="btn-menu-mobile"><img alt="Menu" src="/fleet//tpl/img/btn-menu-mobile.png"></a>
+      </div>
+      <div class="menu-wrapper">
+        <div class="logo">
+          <!--<a href=" http://dev.madewithcaffeine.com/fleet/index.php"><img src="/fleet//tpl/img/logo.png"></a>-->
+          <img src="/fleet//tpl/img/logo.png">
+        </div>
+        <div class="main_menu">
+          <p class="message_header active_menu">Bienvenue, raison</p>
+          <div class="main_navigation">
+            <ul class="menu">
+      <!--    <li><a href="http://dev.madewithcaffeine.com/fleet/index.php" >Accueil</a></li> -->
+                            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/situation" >Situation</a></li>
+                            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/cartographie" >Cartographie</a></li>
+                            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/rapport" >Rapport véhicule</a></li>
+              
+            </ul>
+            <div class="second_navigation">
+              <ul class="menu">
+                                <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/rapports_de_flotte" >Rapport de flotte</a></li>
+                                <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte" class="acitve_menu">Configuration</a></li>
+                                <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/deco">Déconnexion</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- DEBUT CONTAINER -->
+<div class="container">
+ 
+  <!-- DEBUT MAIN CONTENT TOP -->
+  <div class="main_content_top">
+    <div class="main_resize">
+      <div class="resize parambloc">
+        <h1 class="bcktitle ajust_title">Parametre du compte</h1>
+        <ul>
+          <li class="font-bold"><a href="#" class='active_menu02 see_more_param2'>Administration du site</a></li>
+          <div class="relative_info_bloc ss_img_bloc">
+            <div class="ss_menu">
+                          <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=default" >Agences</a></li>
+                          
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=utilisateurs" class="active_menu02">Utilisateurs</a></li>            
+                          
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=typeslieux" >Types de lieux</a></li>
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=lieux" >Lieux</a></li>
+                                      <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=tv" >Types de véhicules</a></li>
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=catveh" >Catégories de véhicules</a></li>
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=veh" >Véhicules</a></li>
+                        </div>
+            <img class="see_more_param" src="/fleet//tpl/img/plus_ico.png" alt="See more">
+          </div>
+        </ul>
+                        <ul>
+          <li class="font-bold alarmes_menu_li"><a href="#" class=' see_more_param2'>Alarmes</a></li>
+          <div class="relative_info_bloc ss_img_bloc">
+           <div class="ss_menu">
+            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=alarme" >Alarmes Sociales</a></li>
+            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=alarme2" >Alarmes Operationelles</a></li>
+            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=alarm-vit" >Alarmes de vitesse</a></li>            
+          </div>
+          <img class="see_more_param" src="/fleet//tpl/img/plus_ico.png" alt="See more">
+          </div>
+        </ul>
+                                        <ul>
+          <li class="font-bold"><a href="#" class=' see_more_param2'>Entretien</a></li>
+          <div class="relative_info_bloc ss_img_bloc">
+            <div class="ss_menu ">
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=tyentretien" >Modification des types d'entretien</a></li>
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=alarm-entretien" >Alarmes d'entretien</a></li>
+            </div>
+            <img class="see_more_param" src="/fleet//tpl/img/plus_ico.png" alt="See more">
+          </div>
+          </ul>
+                        <ul>
+          <li class="font-bold"><a href="#" class=' see_more_param2'>Gestion du compte</a></li>
+          <div class="relative_info_bloc ss_img_bloc">
+          <div class="ss_menu ">
+            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=mdp" >Modifier mon mot de passe</a></li>
+            <!--
+            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=def-pref" >Définir mes préférences</a></li>
+            -->
+          </div>
+          <img class="see_more_param" src="/fleet//tpl/img/plus_ico.png" alt="See more">
+          </div>
+          </ul>
+          <ul>
+            <li class="font-bold"><a href="#" class=' see_more_param2'>Paramètres globaux</a></li>
+            <div class="relative_info_bloc ss_img_bloc">
+            <div class="ss_menu ">
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=etat-moteur" >Personnalisation des états moteur</a></li>
+              <!-- <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=etat-sociaux" >Personnalisation des états sociaux</a></li>  -->
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=preference" >Préférences</a></li>
+            </div>
+          <img class="see_more_param" src="/fleet//tpl/img/plus_ico.png" alt="See more">
+        </div>
+        </ul>
+    </div>
+</div> 
+    <div class="main_resize backgroundbloc">
+        <div class="resize alarm_bloc">
+          <h1 class="bcktitle ajust_title title_agence">Utilisateurs</h1>
+		  <div class="infobloc_param clearfix">
+            <div class="left font-bold">Nombre d'utilisateurs enregistrés :  1</div>
+          </div>
+                    <div class="infobloc_param02">            
+            <div>
+              <p>Login : <span> user1 </span></p>
+              <div class="module_param_user">
+                <h2>Modules</h2>
+                              </div>
+                            <p>Certains véhicule(s)</p>
+                            <p>Téléphone :<span>0998888</span></p>
+              <p>Jours :<span> 7/7</span></p>
+              
+            </div>              
+            <div class="clearfix">
+              <form action="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=utilisateurs#bas" method="post">
+                <input type="hidden" name="id" value="1" />
+                <input class="right submit_butt" type="submit" value="modifier">
+              </form>
+              <form action="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=utilisateurs" method="post" onsubmit="return deleteuser()">
+                <input type="hidden" name="id" value="1" />
+                <input type="hidden" name="mode" value="delete" />
+                <input class="right submit_butt input_supp_param_user" type="submit" value="supprimer">
+              </form>              
+            </div>
+          </div>
+           
+          <form class="infobloc_param02" action="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=utilisateurs#bas" method="post">
+            <input type="hidden" name="mode" value="add" />
+            <input id="ajout_user_button" class="right submit_butt" type="submit" value="Ajouter un utilisateur"><br><br> 
+          </form>        
+        </div>
+             </div>
+  </div>
+<!-- FIN MAIN CONTENT TOP -->
+<!-- DEBUT CONTAINER RESIZE -->
+  <div class="container_resize">
+    <a name="bas"></a>
+    <div id="content_onglet_user" >
+      <div id="content_onglet_info_perso">
+        <div class="onglet_info_perso">
+                    <h1 class="bcktitle ajust_title title_nvllealarme">Nouvel Utilisateur</h1>
+           
+          <div class="onglet_alarm_param_bloc">
+            <h2 id="info_perso_onglet" class="onglet_ajust_user bcktitle_onglet title_onglet_user">Infos. personnelles</h2>
+            <h2 id="vehicule_onglet" class="onglet_ajust_user bcktitle title_onglet_user">Véhicules</h2>
+            <h2 id="modules_onglet" class="onglet_ajust_user bcktitle title_onglet_user">Modules</h2>
+            <h2 id="jours_onglet" class="onglet_ajust_user bcktitle title_onglet_user">Jours</h2>
+                        <h2 id="mail_onglet" class="onglet_ajust_user bcktitle title_onglet_user">Rapports par mail</h2>
+                      </div>
+        </div>
+        <form name="formUser" id="formUser" class="formulaire_alarm_param" action="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=utilisateurs" method="post" onsubmit="return validerUser();">
+                    <input type="hidden" name="mode" value="ajout" />
+                    <div id='content_onglet_alarm_param'>
+            <div class="bck_onglet_param ajust_content_onglet_user">
+              <div class="decale_onglet_user">
+                <div id="content_info_perso" class="content_info_perso">
+                  <div>
+                    <label for="loguser">Login</label>
+                    <input id="loguser" type="text" name="username" value="">
+                  </div>
+                  <div>
+                    <label for="mdpuser">Mot de passe</label>
+                    <input id="mdpuser" type="password" name="pwd" value="">
+                    </div>
+                  <div>
+                    <label for="">Confirmation</label>
+                    <input type="password" name="pwd2" value="">
+                    </div>
+                  <div>
+                    <label for="">Nom</label>
+                    <input type="text" name="name" value="">
+                    </div>
+                  <!--
+                  <div>
+                    <label for="">Prénom</label>
+                    <input type="text" name="surname" value="">
+                    </div> -->
+                  <div>
+                    <label for="">N° tel</label>
+                    <input type="text" name="tel" value="">
+                    <span class="right info_tel_user"> au format international. Par exemple pour la france +33674869587 ou pour le luxembourg +352612345684.)</span>
+                    </div>
+                  <div>
+                    <label for="">Email</label>
+                    <input type="text" name="email" value="">
+                    </div>
+                  
+                </div>
+                <div id="content_veh" class="content_veh">
+                  <div class="checkbox_veh">
+                    <input type="checkbox" name="all" value="1" checked>
+                    <label>Afficher tous les véhicules</label>
+                  </div>
+                  <div class="main_resize">
+                    <div class="left main_resize">
+                    <div class="p_checkbox_veh">
+                      <p>Agences</p>
+                                            <div class="checkbox_veh">
+                        <input type="checkbox" name="agence[]" value="1" >
+                        <label>Agence 1</label>
+                      </div>                      
+                                          </div>
+                    </div>
+                  <div class="p_checkbox_veh">
+                    <p>Véhicules</p>
+                                    
+                  </div>
+                  </div>
+                </div>
+                <div id="content_modules"  class="content_modules">
+
+                  <div class="left main_resize">                </div>
+                <div id="content_jours" class="content_jours">
+                                    <div class="checkbox_veh">
+                    <input type="checkbox" name="jour[]" value="1" >
+                    <label>Lundi</label>
+                  </div>
+                                    <div class="checkbox_veh">
+                    <input type="checkbox" name="jour[]" value="2" >
+                    <label>Mardi</label>
+                  </div>
+                                    <div class="checkbox_veh">
+                    <input type="checkbox" name="jour[]" value="3" >
+                    <label>Mercredi</label>
+                  </div>
+                                    <div class="checkbox_veh">
+                    <input type="checkbox" name="jour[]" value="4" >
+                    <label>Jeudi</label>
+                  </div>
+                                    <div class="checkbox_veh">
+                    <input type="checkbox" name="jour[]" value="5" >
+                    <label>Vendredi</label>
+                  </div>
+                                    <div class="checkbox_veh">
+                    <input type="checkbox" name="jour[]" value="6" >
+                    <label>Samedi</label>
+                  </div>
+                                    <div class="checkbox_veh">
+                    <input type="checkbox" name="jour[]" value="7" >
+                    <label>Dimanche</label>
+                  </div>
+                                    
+                </div>
+                <div id="content_mail" class="content_mail">
+                                  <div class="checkbox_veh">
+                    <input type="checkbox" name="rapport[]" value="4" >
+                    <label>Rapport kilométrique</label>
+                  </div>
+                                  <div class="checkbox_veh">
+                    <input type="checkbox" name="rapport[]" value="5" >
+                    <label>Rapport de flotte journalier</label>
+                  </div>
+                                  <div class="checkbox_veh">
+                    <input type="checkbox" name="rapport[]" value="6" >
+                    <label>Rapport de flotte hebdomadaire</label>
+                  </div>
+                                  <div class="checkbox_veh">
+                    <input type="checkbox" name="rapport[]" value="7" >
+                    <label>Rapport de flotte mensuel</label>
+                  </div>
+                                  <div class="checkbox_veh">
+                    <input type="checkbox" name="rapport[]" value="8" >
+                    <label>Rapport conducteur journalier</label>
+                  </div>
+                                  <div class="checkbox_veh">
+                    <input type="checkbox" name="rapport[]" value="9" >
+                    <label>Rapport conducteur hebdomadaire</label>
+                  </div>
+                                  <div class="checkbox_veh">
+                    <input type="checkbox" name="rapport[]" value="10" >
+                    <label>Rapport conducteur mensuel</label>
+                  </div>
+                                  <div class="checkbox_veh">
+                    <input type="checkbox" name="rapport[]" value="11" >
+                    <label>Alarme de vitesse</label>
+                  </div>
+                                  <div class="checkbox_veh">
+                    <input type="checkbox" name="rapport[]" value="12" >
+                    <label>Alarme d'entretien</label>
+                  </div>
+                                </div>
+              </div>
+            </div>
+            <div class="pagination_onglet_alarm">
+              <input id="button_annuler" type="button" value="Annuler" class="button_butt left">
+              <input type="submit" value="Valider" class="right submit_butt" id="button_next_alarm">  
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- FIN CONTAINER RESIZE -->
+</div>
+<!-- FIN CONTAINER -->
+
+
+    </div><!-- end .main-wrapper -->
+    <script src="/fleet//tpl/js/app.js"></script>
+    
+    <script src="/fleet//tpl/js/parametre-utilisateurs.js"></script>
+    <script src="/fleet//tpl/js/parametre-menu.js"></script>
+    
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<script>  
+  racineimg="/fleet/";
+  (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+  function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+  e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+  e.src='//www.google-analytics.com/analytics.js';
+  r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+  ga('create','UA-XXXXX-1');ga('send','pageview');
+</script>
+
+  </body>
+</html>

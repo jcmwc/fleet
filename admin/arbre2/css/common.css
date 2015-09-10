@@ -1,0 +1,58 @@
+#header{
+	height:62px;
+	background:url(../images/title.png) no-repeat;
+}
+p.validator{
+	float:left;
+}
+div#redirector{
+	position:absolute;
+	top:0px;
+	right:10px;
+	width:150px;
+}
+
+div#menu{
+	position:absolute;
+	top:0px;
+	width:400px;
+	height:30px;
+	left:50%;
+	margin-left:-200px;
+	background:url(../images/bg_menu.png) no-repeat left top;
+}
+
+div#menu ul{
+	margin:0px 0px 0px 20px;
+	padding:0px;
+}
+
+div#menu ul li{
+	display:inline;
+	list-style-type:none;
+	color:#666;
+	margin-right:3px;
+}
+
+div#menu ul li a, div#menu ul li a:visited{
+	font-weight:normal;
+	font-size:10px;
+	text-decoration:none;
+	background:none;
+}
+
+div#menu ul li a:hover{
+	text-decoration:underline;
+	font-weight:normal;
+	font-size:10px;
+}
+
+div#menu ul li a:hover{
+	text-decoration:underline;
+}
+
+
+table thead td {
+	border: 1px solid #DDDDDD;
+	background-color: #EEEEEE;
+}

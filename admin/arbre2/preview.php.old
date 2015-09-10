@@ -1,0 +1,4 @@
+<?php
+require("../require/function.php");
+?>
+<script>window.location='<?=urlp($_GET["arbre_id"])."?".$_SERVER["QUERY_STRING"]?>';</script>

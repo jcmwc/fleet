@@ -1,0 +1,303 @@
+<?
+$PHP_SELF=$_SERVER["PHP_SELF"];
+$defaultcoltri=($defaultcoltri=="")?current($tabcolonne):$defaultcoltri;
+$defaultorder=($defaultorder=="")?"asc":$defaultorder;
+$szQuery.= $groupby." ".requetesql($defaultcoltri,$defaultorder).requetepagin($nbelemparpage,(int)$_GET["debut"]);
+$resultat= query($szQuery);
+$nbresult=countElem($szQuery);
+$colspan=1;
+$TxtSousTitre=$TxtSousTitrelist;
+require($_SERVER["DOCUMENT_ROOT"].__racineadmin__."/include/template_haut.php");
+$colspan=count($tabcolonne);
+if($media){
+$colspan++;
+}
+if ($updown){                                    
+$colspan++;
+}
+if($update){
+$colspan++;
+}
+if($delete){
+$colspan++;
+}
+if($child){
+$colspan++;
+}
+if($popInscrits){
+$colspan++;
+}
+$colspan++;
+?>
+<div class="container">
+    <div class="grid-20">
+    <div class="widget widget-table">
+					
+					<div class="widget-header">
+	    	<span class="icon-list"></span>
+				<h3 class="icon aperture"><? if($TxtTitre!=""){ ?><?=$TxtTitre?> &gt; <?=$TxtSousTitre?><? } else { ?><?=$TxtSousTitre?><? } ?></h3>
+		</div> <!-- .widget-header -->
+					
+					<div class="widget-content">
+					 <?
+    if($filtre!=""){
+        print "<br><div id=\"filtre\" class=\"grid-20\">";
+       	require($filtre);
+       	print "<br></div>";
+    }
+    ?>
+
+						<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+              <? while (list($key, $val) = each($tabcolonne)) { ?>
+              <th><? orderby2($val,uc_latin1($key)) ?></th>
+              <? }
+              if($updown){
+              ?>
+              <th width="38px" ><!-- Ordre --></th>
+              <? }
+              if($notview!=true){
+              ?>
+              </th><th width="38px" ><!-- Voir --></th>
+              <? }
+              if($media) {
+              ?>
+              <th width="38px" ><!-- Apercu --></th>
+              <? }
+              if($update){
+              ?>
+              <th width="38px" ><!-- Modifier --></th>
+              <? }
+              if($delete){
+              ?>
+              <th width="38px" ><!-- Supprimer --></th>
+              <?
+              }
+              if($child){
+              for($J=0;$J<count($urlchild);$J++){
+              ?>
+              <th class="text_th_entete2"><?=$childtxt[$J]?></th>
+              <? }
+              }
+              if($popInscrits){
+              ?>
+              <th width="38px" class="text_th_entete2">VOIR LES INSCRITS</th>
+              <? }
+              if($popchild){
+              for($J=0;$J<count($popurlchild);$J++){
+              ?>
+              <th width="38px" ><!-- <?=uc_latin1($popchildtxt[$J])?> --></th>
+              <? }
+              }
+              ?>
+              <th class="scrollSpacer">&nbsp;</th>
+							</tr>
+						</thead>
+						<tbody>
+							  <?
+              $i=0;
+              while($tbl_result = fetch ($resultat)){
+              if($i++%2==1){?>
+              <tr bgcolor="#d5d5d5" onmouseover="fondtr(this)" onmouseout="nofondtr_2(this)">
+              <? }else{ ?>
+              <tr bgcolor="#e3e3e3" onmouseover="fondtr(this)" onmouseout="nofondtr_1(this)">
+              <? }
+              reset($tabcolonne);
+              while (list($key, $val) = each($tabcolonne)) {
+              //if(preg_match("/[0-9]{4}\-[0-9]{2}\-[0-9]{2}/",$tbl_result[$val])){
+              if(preg_match("/[0-9]{4}\-[0-9]{2}\-[0-9]{2}/",$tbl_result[$val])&&strpos($tbl_result[$val],"REF-")===false){
+                $myval=affichedatetime($tbl_result[$val]);
+              }else{
+                if(is_array($tradchamps)&&in_array($val,$tradchamps)){
+                  if($trad[$tbl_result[$val]]!=""){
+                    $myval=cutWord($trad[$tbl_result[$val]]);
+                  }else{
+                    $myval=cutWord($tbl_result[$val]);
+                  }
+                }else{
+                  $myval=cutWord($tbl_result[$val]);
+                }
+              }
+              $valcouleur1=($valcouleur1!="")?$valcouleur1:0;
+              if($couleur==""||$tbl_result[$couleur]==$valcouleur1){ ?>
+              <td class="firstCell"><a href="<?=$PHP_SELF?>?id=<?=$tbl_result[$tablekey]?>&mode=visu&pere=<?=$_GET["pere"]?>&lang=<?=$_GET["lang"]?>" target="framecontent"><?=$myval?></a></td>
+              <? }else if($tbl_result[$couleur]==2){?>
+              <td class="firstCell jai_valide"><a href="<?=$PHP_SELF?>?id=<?=$tbl_result[$tablekey]?>&mode=visu&pere=<?=$_GET["pere"]?>&lang=<?=$_GET["lang"]?>" target="framecontent">[ <?=$myval?> ]</a></td>
+              <? }else{ ?>
+              <td class="firstCell jai_valide"><a href="<?=$PHP_SELF?>?id=<?=$tbl_result[$tablekey]?>&mode=visu&pere=<?=$_GET["pere"]?>&lang=<?=$_GET["lang"]?>" target="framecontent">[ <?=$myval?> ]</a></td>
+              <? }
+              }
+              if ($updown) {?>
+              <td class="updownfield">
+              <?if($tbl_result[$updownfield]!=1){?>                                                                                         
+              <a href="<?=$PHP_SELF?>?mode=plus&id=<?=$tbl_result[$tablekey]?>&pere=<?=$_GET["pere"]?>&lang=<?=$_GET["lang"]?>" target="framecontent"><span class="css_right ui-icon ui-icon-circle-triangle-n"></span></a>
+              <?}
+              if($tbl_result[$updownfield]!=$nbresult){?>
+              <a href="<?=$PHP_SELF?>?mode=moins&id=<?=$tbl_result[$tablekey]?>&pere=<?=$_GET["pere"]?>&lang=<?=$_GET["lang"]?>" target="framecontent"><span class="css_left ui-icon ui-icon-circle-triangle-s"></span></a>
+              <?}?>
+              </td>
+              <? }
+              if($notview!=true){ ?>
+              <td><a href="<?=$PHP_SELF?>?id=<?=$tbl_result[$tablekey]?>&mode=visu&pere=<?=$_GET["pere"]?>&lang=<?=$_GET["lang"]?>&version_id=<?=$_GET["version_id"]?>" target="framecontent"><span class="icon-eye"></span></a></td>
+              <?}
+              if($media){
+              $key=($tablekey2=="")?$tablekey:$tablekey2;
+              ?>
+              <td width="2px" bgcolor="#FFFFFF"></td>
+              <td><?=affichemedia($tbl_result[$key],$tbl_result["ext"],$table,1)?></td>
+              <? }
+              if($update){
+              ?>
+              <td width="38px" align="center" valign="middle"><a href="<?=$PHP_SELF?>?id=<?=$tbl_result[$tablekey]?>&mode=modif&pere=<?=$_GET["pere"]?>&lang=<?=$_GET["lang"]?>&version_id=<?=$_GET["version_id"]?>" target="framecontent"><span class="icon-pen-alt2"></span></td>
+              <? }
+              if($delete){?>
+              <td width="38px" align="center" valign="middle"><a href="<?=$PHP_SELF?>?id=<?=$tbl_result[$tablekey]?>&mode=suppr&pere=<?=$_GET["pere"]?>&lang=<?=$_GET["lang"]?>" target="framecontent"><span class="icon-x-alt"></span></td>
+              <? }
+              if($child){
+              for($J=0;$J<count($urlchild);$J++){
+              if($childid!=""){?>
+              <td align="center"><?if($childid==$tbl_result[$tablekey]){?><a href="<?=$urlchild[$J]?>?mode=list&pere=<?=$tbl_result[$tablekey]?>&lang=<?=$_GET["lang"]?>" target="framecontent"><img src="<?=__racineadmin__?>/images/new/icone_groupe.gif" border="0" alt="<?=$childtxt[$J]?>"></a><?}?></td>
+              <?}else{?>
+              <td align="center"><a href="<?=$urlchild[$J]?>?mode=list&pere=<?=$tbl_result[$tablekey]?>&lang=<?=$_GET["lang"]?>" target="framecontent"><img src="<?=__racineadmin__?>/images/new/icone_groupe.gif" border="0" alt="<?=$childtxt[$J]?>"></a></td>
+              <? }}}
+              ?><?
+              if($popInscrits){?>
+              <td width="38px" align="center"><a href="javascript:void(window.open('<?=__racineadmin__?>/custom/formations/inscripts.php?idOcc=<?=$tbl_result[$tablekey]?>&formation_id=<?=$_GET["pere"]?>','inscrits'))"><img src="<?=__racineadmin__?>/images/new/icone_groupe.gif" border="0" alt="<?=$childtxt[$J]?>"></a></td>
+              <? }
+              if($popchild){
+              for($J=0;$J<count($popurlchild);$J++){?>
+              <td width="38px" align="center"><a href="javascript:void(window.open('<?=$popurlchild[$J]?>?pere=<?=$tbl_result[$tablekey]?>','popchild'))"><img src="<?=__racineadmin__?>/images/new/icone_groupe.gif" border="0" alt="<?=$popchildtxt[$J]?>"></a></td>
+              <? }}
+              ?>
+              <td class="scrollSpacer">&nbsp;</td>
+              </tr>
+              <?}?>													
+						</tbody>
+					</table>							
+					</div> <!-- .widget-content -->					
+				</div> <!-- .widget -->	
+    
+    <div class="grid-12">
+    <?=$trad["Nombre d'items"]?> : <?=$nbresult?> <?=$typeElem?><?// if($nbresult > 1){echo "s";} ?></div>  
+	<div class="grid-12 pagination">
+		<div style="float:right;">
+		<? pagination($nbresult) ?>
+		</div>
+	</div>
+	</div> <!-- .grid17 -->
+		
+  <?if($ImgAjout==true||$update||$delete||$child||$couleur||$search||$retour){?>
+	<div id="info" class="grid-4">
+  <form action="<?=$PHP_SELF?>?mode=list&pere=<?=$_GET["pere"]?>&lang=<?=$_GET["lang"]?><?=$souslien?>" method="post">
+  Pagination : 
+  <select name="nbelemparpage" onchange="this.form.submit()" style="width:100px">
+  <option value="10" <?=($nbelemparpage==10)?"selected":""?>>10<option>
+  <option value="20" <?=($nbelemparpage==20)?"selected":""?>>20<option>
+  <option value="50" <?=($nbelemparpage==50)?"selected":""?>>50<option>
+  <option value="100" <?=($nbelemparpage==100)?"selected":""?>>100<option>
+  </select></form>
+  <div id="legend" class="widget">
+		<div class="widget-header">
+						<span class="icon-info"></span>
+						<h3 class="icon compass">Informations</h3>					
+					</div>
+			<div class="widget-content">
+          <?
+          if($ImgAjout==true){
+          ?>
+          <a href="<?=$PHP_SELF?>?mode=ajout&pere=<?=$_GET["pere"]?>&lang=<?=$_GET["lang"]?><?=$souslien?>" target="framecontent" class="btn btn-primary btn-large dashboard_add"><?=$Ajouttxt?></a>
+          <?
+          }
+					if($retour==true){
+  				 	if (is_array($lienretour)) {
+  				 	for ($i=0;$i<count($lienretour);$i++) {
+  				 	?>
+  				 		<a href="<?=$lienretour[$i]?>" id="info_retour"  target="framecontent" class="btn btn-primary btn-large dashboard_add"><?=$libretour[$i]?></a>
+  				 	<? }
+  					} else { 
+  					?>
+  				 	<a href="<?=$lienretour?>" id="info_retour"  target="framecontent" class="btn btn-primary btn-large dashboard_add"><?=$libretour?></a>
+  					<? }
+          } 
+          if($ImgAjout==true){
+          ?>
+          <p class="info1"><span class="icon-info"></span> &nbsp&nbsp<?=$TxtSousTitreajout?></p>
+          <?
+          }
+          if($update){
+          ?>
+          <p class="info2"><span class="icon-pen-alt2"></span> &nbsp&nbsp<?=$TxtSousTitremodif?></p>
+          <?
+          }
+          if($delete){
+          ?>
+          <p class="info3"><span class="icon-x-alt"></span>&nbsp&nbsp<?=$TxtSousTitresuppr?></p>
+          <? } ?>
+			</div>		
+	        <?
+          if($export){
+          ?>         
+          <div class="widget-header">
+						<span class="icon-download"></span>
+						<h3 class="icon compass"><?=$TxtSousTitreexport?></h3>					
+					</div>
+			<div class="widget-content">
+          <p><a href="<?=$PHP_SELF?>?mode=export&pere=<?=$tbl_result[$tablekey]?>&lang=<?=$_GET["lang"]?>" target="framecontent"><?=$TxtSousTitreexport?></a></p> <!-- .info5 -->
+			</div>
+          <?
+          }
+          if($search){
+          ?>
+           <div class="widget-header">
+						<span class="icon-magnifying-glass-alt"></span>
+						<h3 class="icon compass"><?=$trad["Recherche"]?></h3>					
+					</div>
+			<div class="widget-content">
+          <form name="search" method="POST" action="<?=$PHP_SELF?>?id=<?=$tbl_result[$tablekey]?>&mode=list&pere=<?=$_GET["pere"]?>&lang=<?=$_GET["lang"]?>" target="framecontent"><input type="text" name="query" value="<?=$_POST["query"]?>" /></form>
+			</div>			
+          <?
+          }                                    
+          if($child){
+          ?> 
+            <div class="widget-header">
+						<span class="icon-list"></span>
+						<h3 class="icon compass"><?=$trad["Acc&eacute;der aux enfants"]?> </h3>					
+					</div>
+			<div class="widget-content">
+          <p><img src="<?=__racineadmin__?>/images/new/icone_groupe.gif">&nbsp;&nbsp;<?=$trad["Acc&eacute;der aux enfants"]?> : <span class="childtxt"><? echo implode(", ", $childtxt) ?></span></p>
+          </div>       
+          <?
+          } ?>
+          </div>
+          <?
+					if($txtcouleur != ""){
+					?>
+						<div id="info_6" class="box">
+						<?php
+            if($couleur!=""){
+				    if (isset($txtcouleur) && count($txtcouleur)>0) {
+            ?>
+                <br/>
+                <!--<p><span class="valid"><?=$typeElem?> :<br/><?=$txtcouleur['0']?></span></p><br/>
+                <p><span class="unvalid">[ <?=$typeElem?> ]</span> :<br/><?=$txtcouleur['1']?></p>-->
+                <p><span class="valid"><?=$txtcouleur['0']?></span></p>
+                <p><span class="unvalid">[ <?=$txtcouleur['1']?> ]</span></p>
+            <?} else {?>
+				        <p><span class="valid"><?=$typeElem?> : <?=$trad["&Eacute;lement valid&eacute;, donc visible sur le site."]?></span></p>
+                <p><span class="unvalid">[ <?=$typeElem?> ]</span> : <?=$trad["&Eacute;lement non valid&eacute;e, donc non visible sur le site."]?></p>
+				    <?php
+                }
+            }
+            ?>
+            <!-- [ ] Utilisateur non valid&eacute; -->
+            </div> <!-- .info6 -->
+          <?php
+          }
+          	?>
+    </div> <!-- .grid 7 --> 
+  <?}?>
+</div> <!-- .container --> 
+<?php
+require($_SERVER["DOCUMENT_ROOT"].__racineadmin__."/include/template_bas.php");
+?>

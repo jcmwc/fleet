@@ -1,0 +1,88 @@
+<?
+$_POST["date_jour"]=($_POST["date_jour"]=="")?date('d/m/Y'):$_POST["date_jour"];
+if($_POST["date_jour"]!=""){   
+  $where.=" and addtime(time_stamp,'".__decalageheure__.":0:0')>='".datebdd(jourdebutmois($_POST["date_jour"]))." 00:00:00'";
+  $where.=" and addtime(time_stamp,'".__decalageheure__.":0:0')<='".datebdd(jourfinmois($_POST["date_jour"]))." 23:59:59'";
+}
+  
+  $sql="select td.*,addtime(td.time_stamp,'".__decalageheure__.":0:0') timestp from track_data td inner join track_info ti on ti.track_info_id=td.track_info_id and owner_id=".$_POST["vehicule"]." 
+  where valid=1 and deleted=0 $where
+  ORDER BY `td`.`time_stamp`  ASC";
+    
+  //print $sql."<br>";
+  
+  $linkconduite=query($sql);
+
+  $totalconduite=0;
+  $totalarret=0;
+
+  $semaine=array();
+  $lastjour=0;
+  while($tblconduite=fetch($linkconduite)){
+    //print_r($tblconduite);
+    //recherche si le jour fait partie du mois
+    $tabjour=explode(" ",$tblconduite["timestp"]);
+    //print $tabjour[0];
+    if($lastjour!=$tabjour[0]){
+      $lastspeed=0;
+      $lastlat=0;
+      $lastlon=0;
+      $lastdistance=0;
+      $semaine[$tabjour[0]]["debut"]=0;
+      //$semaine[$tabjour[0]]=array();
+      $lastjour=$tabjour[0];
+      $i=0;
+      $trajet=array();
+      $debut=0;
+      $fin=0;
+    }  
+    
+    $semaine[$tabjour[0]]["km"]+=(int)$tblconduite["distance_next"]/1000;
+    $semaine[$tabjour[0]]["vitessemax"]=($semaine[$tabjour[0]]["vitessemax"]>vitessekmh($tblconduite["ground_speed"]))?$semaine[$tabjour[0]]["vitessemax"]:vitessekmh($tblconduite["ground_speed"]);
+    //if($lastspeed!=$tblconduite["ground_speed"]&&$lastspeed==0){
+    if(($lastspeed!=$tblconduite["ground_speed"]&&$lastspeed==0)||($lastdistance!=$tblconduite["distance_next"]&&$lastdistance==0)){
+      //print "ici";
+      $semaine[$tabjour[0]]["debut"]=($semaine[$tabjour[0]]["debut"]==0)?$tblconduite["timestp"]:$semaine[$tabjour[0]]["debut"];
+      $semaine[$tabjour[0]]["fin"]=0;
+      $debut=strtotime($tblconduite["timestp"]);
+      $semaine[$tabjour[0]]["date"]=affichedateiso($tabjour[0])." - ".jourfr(dayOfWeek(strtotime($tabjour[0]))-1);
+       
+    }
+    //if($lastspeed!=$tblconduite["ground_speed"]&&$tblconduite["ground_speed"]==0&&$lastspeed!=0){
+    if(($lastspeed!=$tblconduite["ground_speed"]&&$tblconduite["ground_speed"]==0&&$lastspeed!=0)||($lastdistance!=$tblconduite["distance_next"]&&$tblconduite["distance_next"]==0&&$lastdistance!=0)){
+    //if(array_key_exists("lat1",$trajet[$i])){
+      $semaine[$tabjour[0]]["fin"]=$tblconduite["timestp"];
+      $semaine[$tabjour[0]]["datediff"]=dateDifference($semaine[$tabjour[0]]["fin"] , $semaine[$tabjour[0]]["debut"] , '%h H %i Min' );
+      $fin=strtotime($tblconduite["timestp"]);
+      $semaine[$tabjour[0]]["conduite"]+=round(($fin-$debut)/60);
+      $semaine[$tabjour[0]]["arret"]=date('h\H i ',(strtotime($semaine[$tabjour[0]]["fin"])-strtotime($semaine[$tabjour[0]]["debut"])-3600-$semaine[$tabjour[0]]["conduite"]*60));
+    
+      /*
+      $debut=strtotime($trajet[$i]["debut"]);
+      $fin=strtotime($trajet[$i]["fin"]); 
+      */   
+      //$tbl["conduite"]=round(($fin-$debut)/60);
+      //print $tbl["conduite"];
+      //$trajet[$i]["arret"]=date('h\H i ',(strtotime($trajet[$i]["fin"])-strtotime($trajet[$i]["debut"])-3600-$tbl["conduite"]*60));
+    //}
+    }
+    
+        
+    $lastspeed=$tblconduite["ground_speed"];
+    $lastdistance=$tblconduite["distance_next"];
+    if($lastlat!=$tblconduite["latitude"]&&$lastlon!=$tblconduite["longitude"]&&$lastlon!=0&&$lastlat!=0&&$tblconduite["latitude"]!=0&&$tblconduite["longitude"]!=0){
+      $contenttabcoordonnee.="tabcoordonnee.push(new google.maps.LatLng(".$tblconduite["latitude"].",".$tblconduite["longitude"]."));";
+    }
+    //$tbl_list_vehicule[]=$tblconduite;
+  }
+  //print_r($semaine);
+//print_r($trajet); 
+/*
+$sql="select lc.*,tlc.libelle as lib from ".__racinebd__."lieu_compte lc inner join ".__racinebd__."type_lieu_compte tlc on lc.type_lieu_compte_id=tlc.type_lieu_compte_id where compte_id=".$_SESSION["compte_id"]." and lc.supprimer=0 ".$where." order by lc.libelle";
+$link=query($sql);
+
+while($tbl=fetch($link)){
+  $contenttab.="tab.push(new Array('".$tbl["icon"]."','".$$tbl["latitude"]."','".$tbl["longitude"]."','".$tbl["rayon"]."'));";
+} 
+*/
+?>

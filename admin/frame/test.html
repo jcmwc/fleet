@@ -1,0 +1,373 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+<TITLE>Interface d'administration de Phantom</TITLE>
+<META http-equiv="Content-Type" Content="text/html; charset=UTF-8">
+<meta name="author" content="Phantom" />		
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<script type="text/javascript" src="/admin/js/formulaire.js"></script>	
+<script type="text/javascript" src="/admin/js/select.js"></script>
+<script type="text/javascript" src="/admin/libexterne/fckeditor/fckeditor.js"></script>
+<script type="text/javascript" src="/admin/libexterne/calendar/js/jscal2.js"></script> 
+<script type="text/javascript" src="/admin/libexterne/calendar/js/lang/fr.js"></script>
+<script type="text/javascript" src="/admin/js/function.js"></script>
+<script type="text/javascript" src="/admin/custom/function.js"></script>
+	<script>
+fckdir='/admin/libexterne/fckeditor/';
+cssdir='/custom/css/';
+defaultlanguage    = 'fr' ;
+</script>
+
+<script>
+closetxt='FERMER';
+</script>
+
+<link rel="stylesheet" type="text/css" href="/admin/libexterne/fckeditor/_samples/sample.css" />
+<link rel="stylesheet" type="text/css" href="/admin/libexterne/calendar/css/jscal2.css" /> 
+<link rel="stylesheet" type="text/css" href="/admin/libexterne/calendar/css/border-radius.css" /> 
+<link rel="stylesheet" type="text/css" href="/admin/libexterne/calendar/css/steel/steel.css" /> 
+<link rel="stylesheet" type="text/css" href="/admin/styles/index_p01.css">
+<!--[if gte IE 9]>
+	<link rel="stylesheet" href="/admin/styles/phantom_v2/ie9.css" type="text/css" />
+	<![endif]-->
+	
+	<!--[if gte IE 8]>
+	<link rel="stylesheet" href="/admin/styles/phantom_v2/ie8.css" type="text/css" />
+	<![endif]-->
+<!--[if IE 6]>
+<style type="text/css">
+#img_pointer_arbre{background:none;width:20px;height:65px;}
+.img_pointer_arbre_on{filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/admin/arbre2/icones_arbre/fleche_on.png');}
+.img_pointer_arbre_off{filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/admin/arbre2/icones_arbre/fleche_off.png');}
+.menu li {overflow:hidden;}
+a:hover.ss_menu_nouveau3 span {top:10px;left:-20px;}
+</style>
+<![endif]-->
+<!--[if gte IE 7]>
+<style type="text/css">
+#resultat{width:auto;overflow:auto;overflow-x:hidden;}
+a:hover.ss_menu_nouveau3 span {top:0px;}
+</style>
+<![endif]-->
+<!--[if gte IE 8]>
+<style type="text/css">
+a:hover.ss_menu_nouveau3 span {top:-40px;}
+</style>
+<![endif]--><link href="/admin/arbre2//src/skin-vista/ui.dynatree.css" rel="stylesheet" type="text/css">
+<link href="/admin/arbre2//src/skin-vista/jquery.tooltip.css" rel="stylesheet" type="text/css">
+<link href="/admin/arbre2//jq.context/jquery.contextMenu.css" rel="stylesheet" type="text/css" />
+<link href="/admin/styles/phantom_v2/reset.css" type="text/css" media="screen" title="no title" />
+<link rel="stylesheet" href="/admin/styles/phantom_v2/text.css" type="text/css" media="screen" title="no title" />
+<link rel="stylesheet" href="/admin/styles/phantom_v2/buttons.css" type="text/css" media="screen" title="no title" />
+<link rel="stylesheet" href="/admin/styles/phantom_v2/theme-default.css" type="text/css" media="screen" title="no title" /> 
+<link rel="stylesheet" href="/admin/styles/phantom_v2/all.css" type="text/css" media="screen" title="no title" />  
+<script src="/admin/arbre2//jquery/jquery.js" type="text/javascript"></script>
+<script src="/admin/arbre2//jquery/jquery-ui.custom.js" type="text/javascript"></script>
+<script src="/admin/js/all.js" type="text/javascript"></script>
+<script src="/admin/arbre2//jquery/jquery.cookie.js" type="text/javascript"></script>
+<script src="/admin/arbre2//jquery/jquery.tooltip.js" type="text/javascript"></script>
+<script src="/admin/arbre2//jq.context/jquery.contextMenu.js" type="text/javascript"></script>
+<script src="/admin/arbre2//src/jquery.dynatree.jc.js" type="text/javascript"></script>
+<script src="/admin/arbre2//src/customtreefunction.php?langue_id=1" type="text/javascript"></script>
+<script type="text/javascript">
+
+	$(function(){
+		$("#arbre_new").dynatree( {
+      //persist: true,
+			title: "Phantom",
+      imagePath:'/admin/arbre2/imgs/',
+      defaultVerrouImg:'lock.gif',
+			fx: { height: "toggle", duration: 200 },
+			autoFocus: false,
+			onActivate: function(node) {
+        currentnode=node;
+				$("#echoActive").text("" + node + " (" + node.getKeyPath()+ ")");
+			},
+      
+      onKeydown: function(node, event) {
+        // Eat keyboard events, when a menu is open
+        if( $(".contextMenu:visible").length > 0 )
+          return false;
+        TouchKeyDown = (window.Event) ? event.which : event.keyDown;
+        switch( TouchKeyDown ) {
+
+        // Open context menu on [Space] key (simulate right click)
+        case 32: // [Space]
+          $(node.span).trigger("mousedown", {
+            preventDefault: true,
+            button: 2
+            })
+          .trigger("mouseup", {
+            preventDefault: true,
+            pageX: node.span.offsetLeft,
+            pageY: node.span.offsetTop,
+            button: 2
+            });
+          return false;
+
+        // Handle Ctrl-C, -X and -V
+        case 67:
+          if( event.ctrlKey ) { // Ctrl-C
+            copyPaste("copy", node);
+            return false;
+          }
+          break;
+        case 86:
+          if( event.ctrlKey ) { // Ctrl-V
+            copyPaste("paste", node);
+            return false;
+          }
+          break;
+        case 88:
+          if( event.ctrlKey ) { // Ctrl-X
+            copyPaste("cut", node);
+            return false;
+          }
+          break;
+        }
+      },      
+      //children:struct,
+      initAjax: {url: "/admin/arbre2//initarbre.php",data: {langue_id: 1}},
+			onLazyRead: function(node){node.appendAjax({url: "/admin/arbre2//sampleOpen1JC.php",dataType:"json",data: {key: node.data.key,langue_id: 1}});},
+      onDblClick: function(node, event){rename(node)},
+      //gestion du drag and drop
+      dnd: {
+            onDragStart: function(node) {
+              //logMsg("tree.onDragStart(%o)", node);
+              return true;
+            },
+            autoExpandMS: 500,
+            preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
+            onDragEnter: function(node, sourceNode) {
+              //logMsg("tree.onDragEnter(%o, %o)", node, sourceNode);
+              return true;
+            },
+            onDragOver: function(node, sourceNode, hitMode) {
+              //logMsg("tree.onDragOver(%o, %o, %o)", node, sourceNode, hitMode);
+              if(node.isDescendantOf(sourceNode)){
+                return false;
+              }
+              if( !node.data.isFolder && hitMode === "over" ){
+                return "after";
+              }
+            },
+            onDrop: function(node, sourceNode, hitMode, ui, draggable) {
+              //logMsg("tree.onDrop(%o, %o, %s)", node, sourceNode, hitMode);
+              //alert(DTNodeStatus_Loading)
+              //,hitMode:hitMode
+              //alert(hitMode)
+              //hitMode2=(hitMode=='over')?'over':'';
+              //a gérer plus tard
+              hitMode='over';
+              node.setLazyNodeStatus(DTNodeStatus_Loading);
+              $.ajax({
+                url: '/admin/arbre2//sampledrop.php',
+                type: "POST",
+                dataType: "json",
+                data: {drop_id: node.data.key,drag_id: sourceNode.data.key,hitMode:hitMode},
+                success: function(data) {
+                  node.setLazyNodeStatus(DTNodeStatus_Ok);
+                  if(data.ok){    
+                    //alert(hitMode)    
+                    sourceNode.move(node, hitMode);
+                  }else{
+                    alert(data.msg)
+                  }
+                }
+              }).error(function(jqXHR, textStatus, errorThrown){
+              alert(jqXHR.responseText+"erreur");
+              node.setLazyNodeStatus(DTNodeStatus_Error, {info: textStatus, tooltip: "" + errorThrown});}
+              );
+            },
+            onDragLeave: function(node, sourceNode) {
+              //logMsg("tree.onDragLeave(%o, %o)", node, sourceNode);
+            }
+          }
+		});    
+    // jQuery contextMenu blocks mouse events, so we have to catch them in order to
+// activate the node on click
+$(document).on('mousedown.contextMenu', function(e){
+	var node = $.ui.dynatree.getNode(e.target);
+	window.console && console.log("e: %o, node: %o", e, node);
+	node && node.activate();
+});
+  $.contextMenu({
+  	// bind menu to every dynatree node
+  	selector: 'a.dynatree-title',
+    events: {show: function(opt){ var node = $.ui.dynatree.getNode(this);updatemenu(node)}},
+  	// called for every menu command
+  	callback: function(cmd, options) {
+      //alert(cmd)
+      action(cmd, options);
+  	},
+  	items: {
+  		nouveau: {name: "Nouveau", icon:"nouveau",items: {
+              "gabarit4": {name: "Actualité",icon:"gabarit4ico"}
+        ,        "gabarit8": {name: "Agenda",icon:"gabarit8ico"}
+        ,        "gabarit1": {name: "Article",icon:"gabarit1ico"}
+        ,        "gabarit13": {name: "Contact",icon:"gabarit13ico"}
+        ,        "gabarit2": {name: "Evenement",icon:"gabarit2ico"}
+        ,        "gabarit10": {name: "Fichier",icon:"gabarit10ico"}
+        ,        "gabarit6": {name: "Lexique",icon:"gabarit6ico"}
+        ,        "gabarit11": {name: "Lien",icon:"gabarit11ico"}
+        ,        "gabarit7": {name: "Mailing",icon:"gabarit7ico"}
+        ,        "gabarit5": {name: "Mot",icon:"gabarit5ico"}
+        ,        "gabarit9": {name: "Plan du site",icon:"gabarit9ico"}
+        ,        "gabarit12": {name: "Recherche",icon:"gabarit12ico"}
+        ,        "gabarit3": {name: "Rubrique",icon:"gabarit3ico"}
+        ,        "gabarit14": {name: "Site",icon:"gabarit14ico"}
+        ,        "gabarit15": {name: "univers",icon:"gabarit15ico"}
+          
+      }},
+      "sep1": "---------",
+      "explorer": {name: "Explorer", icon: "explore"},
+      "informations": {name: "Informations", icon: "informations"},
+      "apercu": {name: "Aperçu", icon: "apercu",items:{
+                    "apercu_version1": {name: "En ligne",icon:"version1ico"}
+            ,            "apercu_version2": {name: "Brouillon",icon:"version2ico"}
+                  }},
+      "verrouiller": {name: "Verrouiller", icon: "verrouiller"},
+      "deverrouiller": {name: "Déverrouiller", icon: "deverrouiller"},
+      "modifier": {name: "Modifier", icon: "modifier",items:{
+                    "modifier_version1": {name: "En ligne",icon:"version1ico"}
+            ,            "modifier_version2": {name: "Brouillon",icon:"version2ico"}
+                  }},
+      "publier": {name: "Publier", icon: "publier"},
+      "depublier": {name: "Dépublier", icon: "depublier"},
+  		"supprimer": {name: "Supprimer", icon: "supprimer"},
+      "renommer": {name: "Renommer", icon: "renommer"},
+      "sep2": "---------",
+      "couper": {name: "Couper", icon: "couper"},
+  		"copier": {name: "Copier", icon: "copier"},
+  		"coller": {name: "Coller", icon: "coller"},
+      "alias": {name: "Créer un alias", icon: "alias"},
+      "arbo": {name: "Coller l\'arborescence", icon: "arbo"},
+  		"sep3": "---------",
+      "premier": {name: "En premier", icon: "premier"},
+  		"haut": {name: "Plus haut", icon: "haut"},
+      "bas": {name: "Plus bas", icon: "bas"},
+      "dernier": {name: "En dernier", icon: "dernier"},
+      "sep4": "---------",
+      "droits": {name: "Droits", icon: "droits"},
+      "sep5": "---------",
+      "export": {name: "Export", icon: "export"},
+      "import": {name: "Import", icon: "import"},
+      "vider": {name: "Vider la corbeille", icon: "vider"},
+      "restaurer": {name: "Restaurer", icon: "restaurer"},
+      "suppression": {name: "Suppression définitive", icon: "suppression"}
+  	}
+  }); // $.contextMenu()
+  });
+  </script>
+<style>
+  .context-menu-item.icon-gabarit4ico { background-image: url('/upload/phantom_gabarit4.gif');}
+.context-menu-item.icon-gabarit8ico { background-image: url('/upload/phantom_gabarit8.gif');}
+.context-menu-item.icon-gabarit1ico { background-image: url('/upload/phantom_gabarit1.gif');}
+.context-menu-item.icon-gabarit13ico { background-image: url('/upload/phantom_gabarit13.gif');}
+.context-menu-item.icon-gabarit2ico { background-image: url('/upload/phantom_gabarit2.gif');}
+.context-menu-item.icon-gabarit10ico { background-image: url('/upload/phantom_gabarit10.gif');}
+.context-menu-item.icon-gabarit6ico { background-image: url('/upload/phantom_gabarit6.gif');}
+.context-menu-item.icon-gabarit11ico { background-image: url('/upload/phantom_gabarit11.gif');}
+.context-menu-item.icon-gabarit7ico { background-image: url('/upload/phantom_gabarit7.gif');}
+.context-menu-item.icon-gabarit5ico { background-image: url('/upload/phantom_gabarit5.gif');}
+.context-menu-item.icon-gabarit9ico { background-image: url('/upload/phantom_gabarit9.gif');}
+.context-menu-item.icon-gabarit12ico { background-image: url('/upload/phantom_gabarit12.gif');}
+.context-menu-item.icon-gabarit3ico { background-image: url('/upload/phantom_gabarit3.gif');}
+.context-menu-item.icon-gabarit14ico { background-image: url('/upload/phantom_gabarit14.gif');}
+.context-menu-item.icon-gabarit15ico { background-image: url('/upload/phantom_gabarit15.gif');}
+  .context-menu-item.icon-alias { background-image: url('imgs/globe.gif');}
+  .nottranslate a{border-bottom: 1px dashed red !important;}
+  .brouillon a{text-decoration: line-through !important;}
+  .img_pointer_arbre_on{background-image:url(/admin/arbre2/icones_arbre/fleche_on.png);}
+  .img_pointer_arbre_off{background-image:url(/admin/arbre2/icones_arbre/fleche_off.png);}
+</style>
+</HEAD>
+<body>
+<div id="wrapper">Loading</div>
+<iframe id="framecontent" name="framecontent" bgcolor="" marginheight="0" marginwidth="0" src="../home/index.php" height="0" width="0" style="border:none;" frameBorder="0" border="0" id="detailligne" name="detailligne" onload="aspirecontent()">
+Your browser does not support iframes. 
+</iframe>
+<div style="position : absolute; top : 0; left : 0px; width : 320px; border-top : solid 4px #006666; border-bottom : solid 4px #006666; border-right : solid 4px #006666; background-color:#DDDDDD; font-family:Arial;z-index:50000" id="contenaire_arbre">
+ <div onClick="javascript:show_arbre();" style="left : 324px;" id="img_pointer_arbre" class="img_pointer_arbre_on"></div>
+  <div style="float : left; width : 300px; background-color:#DDDDDD; min-height : 320px;">
+	  <div id="choix_de_langue" style="width : 190px; background-color:#DDDDDD; height : 20px; padding-left : 10px; padding-top : 5px; font-size : 12px;">
+    <!-- Selecteur -->
+    <select id='options' name='options'><option value='en|/upload/phantom_langue2.gif' >&nbsp;anglais</option><option value='fr|/upload/phantom_langue1.gif' selected>&nbsp;français</option></select>    </div>
+    <div id="arbre_new" style="position:relative;min-width : 300px; background-color:#DDDDDD; min-height : 315px;padding-bottom:20px;overflow-x : scroll;overflow-y : hidden"></div>
+    <div style="clear : both"></div>
+    </div>
+    <div style="width:20px;height:100%;float:left;background-color:#DDDDDD;bottom:0px;">
+        <div><a href="javascript:refreshA()" class="enabled" title="Actualiser"><img src="/admin/arbre2/icones_arbre/refresh.gif"  width="20" height="20" border="0" /></a></div>
+        <div id="menu_nouveau">
+        <a href="#" class="enabled ss_menu_nouveau" title="Nouveau">
+        		<img src="/admin/arbre2/icones_arbre/nouvel_article.gif"  width="20" height="20" border="0" />
+        		<span class="ss_menu_nouveau" style="top:-20px;"><table><tr><td><ul><li><a href="javascript:action('gabarit4')" >Actualité</a></li><li><a href="javascript:action('gabarit8')" >Agenda</a></li><li><a href="javascript:action('gabarit1')" >Article</a></li><li><a href="javascript:action('gabarit13')" >Contact</a></li><li><a href="javascript:action('gabarit2')" >Evenement</a></li><li><a href="javascript:action('gabarit10')" >Fichier</a></li><li><a href="javascript:action('gabarit6')" >Lexique</a></li><li><a href="javascript:action('gabarit11')" >Lien</a></li><li><a href="javascript:action('gabarit7')" >Mailing</a></li><li><a href="javascript:action('gabarit5')" >Mot</a></li><li><a href="javascript:action('gabarit9')" >Plan du site</a></li><li><a href="javascript:action('gabarit12')" >Recherche</a></li><li><a href="javascript:action('gabarit3')" >Rubrique</a></li><li><a href="javascript:action('gabarit14')" >Site</a></li><li><a href="javascript:action('gabarit15')" >univers</a></li></ul></td></tr></table></span></a>
+                </div>
+        <div><a href="javascript:action('informations')" class="enabled" title="Informations"><img src="/admin/arbre2/icones_arbre/informations.gif" width="20" height="20" border="0" /></a></div>
+        <div><a href="javascript:action('verrouiller')" class="enabled" title="Verrouiller/Déverrouiller"><img src="/admin/arbre2/icones_arbre/verrouiller.gif" width="20" height="20" border="0"  /></a></div>
+        <div id="menu_modifier">
+        <a href="#" class="enabled ss_menu_nouveau" title="Modifier"><img src="/admin/arbre2/icones_arbre/modifier.gif" width="20" height="20" border="0" />
+        <span class="ss_menu_nouveau"><table><tr><td>
+              <ul>
+              <li><a href="javascript:modifier(1,1)" >En ligne</a></li><li><a href="javascript:modifier(1,2)" >Brouillon</a></li>                </ul></td></tr></table></span></a>
+        </div>
+        <div><a href="javascript:action('supprimer')" class="enabled" title="Supprimer"><img src="/admin/arbre2/icones_arbre/supprimer.gif" width="20" height="20" border="0" /></a></div>
+        <div><a href="javascript:action('renommer')" class="enabled" title="Renommer"><img src="/admin/arbre2/icones_arbre/renommer.gif" width="20" height="20" border="0" /></a></div>
+        <div><a href="javascript:action('copier')" class="enabled" title="Copier"><img src="/admin/arbre2/icones_arbre/copier.gif" width="20" height="20" border="0" /></a></div>
+        <div><a href="javascript:action('couper')" class="enabled" title="Couper"><img src="/admin/arbre2/icones_arbre/couper.gif" width="20" height="20" border="0" /></a></div>
+        <div><a href="javascript:action('coller')" class="enabled" title="Coller"><img src="/admin/arbre2/icones_arbre/coller.gif" width="20" height="20" border="0" /></a></div>
+        <div><a href="javascript:action('premier')" class="enabled" title="En premier"><img src="/admin/arbre2/icones_arbre/en_premier.gif" width="20" height="20" border="0" /></a></div>
+        <div><a href="javascript:action('haut'" class="enabled" title="Plus haut"><img src="/admin/arbre2/icones_arbre/plus_haut.gif" width="20" height="20" border="0" /></a></div>
+        <div><a href="javascript:action('bas')" class="enabled" title="Plus bas"><img src="/admin/arbre2/icones_arbre/plus_bas.gif" width="20" height="20" border="0" /></a></div>
+        <div><a href="javascript:action('dernier')" class="enabled" title="En dernier"><img src="/admin/arbre2/icones_arbre/en_dernier.gif" width="20" height="20" border="0" /></a></div>
+        <div><a href="javascript:action('alias')" class="enabled" title="Créer un alias"><img src="/admin/arbre2/icones_arbre/creer_alias.gif" width="20" height="20" border="0" /></a></div>
+        <div id="menu_voir">
+        <a href="#" class="enabled ss_menu_nouveau" title="Aperçu"><img src="/admin/arbre2/icones_arbre/voir.gif" width="20" height="20" border="0" />
+        <span class="ss_menu_nouveau"><table><tr><td><ul>
+            <li><a href="javascript:show(1,1)" >En ligne</a></li><li><a href="javascript:show(1,2)" >Brouillon</a></li></ul></td></tr></table></span></a>
+        </div>
+        <div><a href="javascript:publier()" class="enabled" title="Publier"><img src="/admin/arbre2/icones_arbre/publier.gif" width="20" height="20" border="0" /></a></div>
+        <!-- Legende -->
+        <div id="menu_modifier">
+        <a href="#" class="enabled ss_menu_nouveau2" title="Legende" style='text-decoration:none;'><img src="/admin/arbre2/icones_arbre/legende.gif" width="20" height="20" border="0" />
+         		<span class="ss_menu_nouveau2 "><table><tr><td>
+        		<ul style="width:300px">	
+        		    <li><center><b>LEGENDE</b></center></li>
+        				                  <li><div class="enligne">publié</div></li>
+                                  <li><div class="brouillon">non publié</div></li>
+                                <li><div class="nottranslate">non traduit</div></li>
+                <li style="text-decoration:none; ">
+                verrouill&eacute;&nbsp;<img src="/admin/arbre2/imgs/lock.gif" />
+                </li>
+                <li style="text-decoration:none; ">
+                alias&nbsp;<img src="/admin/arbre2/imgs/globe.gif" />
+                </li>
+                 <li class="legende" >
+                <table cellpadding="0" cellspacing="0" width="300">
+                  <tr>
+                    <td class="table_legende_gabarit legendepadding" width="50%">
+                    gabarit normal&nbsp;<br/>
+                    </td>
+                    <td class="marge" width="50%">
+                    gabarit s&eacute;curis&eacute;<br/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="taille_table table_legende_gabarit legendepadding">
+                    <img src='../../upload/phantom_gabarit4.gif' />&nbsp;Actualité<br/><img src='../../upload/phantom_gabarit8.gif' />&nbsp;Agenda<br/><img src='../../upload/phantom_gabarit1.gif' />&nbsp;Article<br/><img src='../../upload/phantom_gabarit13.gif' />&nbsp;Contact<br/><img src='../../upload/phantom_gabarit2.gif' />&nbsp;Evenement<br/><img src='../../upload/phantom_gabarit10.gif' />&nbsp;Fichier<br/><img src='../../upload/phantom_gabarit6.gif' />&nbsp;Lexique<br/><img src='../../upload/phantom_gabarit11.gif' />&nbsp;Lien<br/><img src='../../upload/phantom_gabarit7.gif' />&nbsp;Mailing<br/><img src='../../upload/phantom_gabarit5.gif' />&nbsp;Mot<br/><img src='../../upload/phantom_gabarit9.gif' />&nbsp;Plan du site<br/><img src='../../upload/phantom_gabarit12.gif' />&nbsp;Recherche<br/><img src='../../upload/phantom_gabarit3.gif' />&nbsp;Rubrique<br/><img src='../../upload/phantom_gabarit14.gif' />&nbsp;Site<br/><img src='../../upload/phantom_gabarit15.gif' />&nbsp;univers<br/>                    </td>
+                    <td class="taille_table marge">
+                    <img src='../../upload/phantom_gabarit2_4.gif' />&nbsp;Actualité<br/><img src='../../upload/phantom_gabarit2_8.gif' />&nbsp;Agenda<br/><img src='../../upload/phantom_gabarit2_1.gif' />&nbsp;Article<br/><img src='../../upload/phantom_gabarit2_13.gif' />&nbsp;Contact<br/><img src='../../upload/phantom_gabarit2_2.gif' />&nbsp;Evenement<br/><img src='../../upload/phantom_gabarit2_10.gif' />&nbsp;Fichier<br/><img src='../../upload/phantom_gabarit2_6.gif' />&nbsp;Lexique<br/><img src='../../upload/phantom_gabarit2_11.gif' />&nbsp;Lien<br/><img src='../../upload/phantom_gabarit2_7.gif' />&nbsp;Mailing<br/><img src='../../upload/phantom_gabarit2_5.gif' />&nbsp;Mot<br/><img src='../../upload/phantom_gabarit2_9.gif' />&nbsp;Plan du site<br/><img src='../../upload/phantom_gabarit2_12.gif' />&nbsp;Recherche<br/><img src='../../upload/phantom_gabarit2_3.gif' />&nbsp;Rubrique<br/><img src='../../upload/phantom_gabarit2_14.gif' />&nbsp;Site<br/><img src='../../upload/phantom_gabarit2_15.gif' />&nbsp;univers<br/>                    </td>
+                  </tr>
+                 </table>
+                </li>
+          		</ul></td></tr></table></span></a>
+        </div>        
+        <div style="clear : both"></div>
+    </div>
+    <div style="clear : both"></div> 
+    </div><!--Fin tableau general-->
+</BODY>
+</HTML>

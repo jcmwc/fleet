@@ -1,0 +1,67 @@
+<?
+//a refaire
+//listing vehicule, puis appeler rapport periodique
+
+$where="";
+if($_POST["date_debut"]!=""){
+   //$where.=" and addtime(min_time_stamp,'".__decalageheure__.":0:0')>='".datetimebdd($_POST["date_debut"]." ".$_POST["heure_debut"])."'";
+   $where.=" and p.time>='".datetimebdd($_POST["date_debut"]." ".$_POST["heure_debut"])."'";
+}
+if($_POST["date_fin"]!=""){
+   $where.=" and p.time<='".datetimebdd($_POST["date_fin"]." ".$_POST["heure_fin"])."'";
+}
+$sql="select * from ".__racinebd__."type_compte where compte_id=".$_SESSION["compte_id"]." and supprimer=0 order by libelle";
+$link=query($sql);
+
+while($tbl=fetch($link)){
+  $tbl_list_type[]=$tbl;
+  $key_list_type[$tbl["type_compte_id"]]=$tbl["libelle"];
+}
+
+if($_POST["agence"]!=""){
+  $where2=" and agence_compte_id=".$_POST["agence"];
+}
+$totalkm=0;
+$totaldistance=0;
+$totalconso=0;
+$sql=getsqllistvehiculerapport($where).$where2;
+//print $sql; 
+$link=query($sql);
+while($tbl=fetch($link)){
+  if($tbl["phantom_device_id"]!=""){
+  //print_r($tbl);
+  $sql="select * from ".__racinebd__."categorie_compte_device ccd
+        inner join ".__racinebd__."categorie_compte cc on ccd.categorie_compte_id=cc.categorie_compte_id where device_id=".$tbl["phantom_device_id"];
+  //print $sql;
+  $link2=query($sql);
+  $tbl_list_cat=array();
+  while($tbl2=fetch($link2)){
+    $tbl_list_cat[]=$tbl2["libelle"];
+  }
+  $tbl["listcat"]=implode(", ",$tbl_list_cat);
+  //calcul du temps
+  
+  //consotheorique
+  if($tbl["consommationtype"]==1){
+    $sql="select * from ".__racinebd__."type_compte where compte_id=".$_SESSION["compte_id"]." and type_compte_id=".$tbl["type_compte_id"];
+    $link2=query($sql);
+    $tbl2=fetch($link2);
+    $tbl["consotheorique"]=$tbl2["consommation"];
+  }else{
+    $tbl["consotheorique"]=$tbl["consommation"];
+  }
+  /*
+  print $tbl["mintime"]."<br>";
+  print $tbl["maxtime"];
+  */
+  $tbl["datediff"]=dateDifference($tbl["mintime"] , $tbl["maxtime"] , '%y Année %m Mois %d Jours %h H %i Min' );
+  $totalkm+=($tbl["kminit"]+$tbl["km"]+$tbl["correctifkm"]);
+  $totaldistance+=($tbl["km"]);
+  $totalconso+=$tbl["consotheorique"]*((int)$tbl["km"])/100;
+  $tbl["conso"]=$tbl["consotheorique"]*((int)$tbl["km"])/100;
+  $tbl["theorique"]=$tbl["kminit"]+$tbl["km"]+$tbl["correctifkm"];
+  $tbl_list_vehicule[]=$tbl;  
+  }
+}
+$tbl_list_export=$tbl_list_vehicule;
+?>

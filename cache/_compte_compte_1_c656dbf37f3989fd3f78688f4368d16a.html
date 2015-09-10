@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="fr" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="fr" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="fr" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="fr" class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>mister fleet | situation</title>
+    <meta name="description" content="">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="stylesheet" href="/fleet//tpl/css/screen.css">
+
+
+    <!--[if lte IE 8]><link rel="stylesheet" href="/fleet//tpl/css/ie.css"><![endif]-->
+    <script src="/fleet//tpl/js/modernizr.min.js"></script>
+    
+    
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyC4e8Gsf4BE6SVuZmt7PSdUGXnan-gBx4I"></script>
+    <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&client=gme-rubycom"></script> -->
+    
+    <link href='http://fonts.googleapis.com/css?family=Economica:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='/fleet//tpl/fancybox/jquery.fancybox.css' rel='stylesheet' type='text/css'>
+
+
+  </head>
+  <body>
+        <div class="main-wrapper">
+    <div class="header header-mobile">
+      <div class="logo-mobile">
+        <a href="http://dev.madewithcaffeine.com/fleet/index.php" class="link-home-mobile"><img alt="Logo Mister fleet" src="/fleet//tpl/img/logo-mobile.png"></a>
+
+        <a href="#" class="btn-menu-mobile"><img alt="Menu" src="/fleet//tpl/img/btn-menu-mobile.png"></a>
+      </div>
+      <div class="menu-wrapper">
+        <div class="logo">
+          <!--<a href=" http://dev.madewithcaffeine.com/fleet/index.php"><img src="/fleet//tpl/img/logo.png"></a>-->
+          <img src="/fleet//tpl/img/logo.png">
+        </div>
+        <div class="main_menu">
+          <p class="message_header active_menu">Bienvenue, raison</p>
+          <div class="main_navigation">
+            <ul class="menu">
+      <!--    <li><a href="http://dev.madewithcaffeine.com/fleet/index.php" >Accueil</a></li> -->
+                            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/situation" >Situation</a></li>
+                            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/cartographie" >Cartographie</a></li>
+                            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/rapport" >Rapport véhicule</a></li>
+              
+            </ul>
+            <div class="second_navigation">
+              <ul class="menu">
+                                <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/rapports_de_flotte" >Rapport de flotte</a></li>
+                                <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte" class="acitve_menu">Configuration</a></li>
+                                <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/deco">Déconnexion</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- DEBUT CONTAINER -->
+<div class="container">
+ 
+  <!-- DEBUT MAIN CONTENT TOP -->
+  <div class="main_content_top">
+    <div class="main_resize">
+      <div class="resize parambloc">
+        <h1 class="bcktitle ajust_title">Parametre du compte</h1>
+        <ul>
+          <li class="font-bold"><a href="#" class='active_menu02 see_more_param2'>Administration du site</a></li>
+          <div class="relative_info_bloc ss_img_bloc">
+            <div class="ss_menu">
+                          <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=default" >Agences</a></li>
+                          
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=utilisateurs" >Utilisateurs</a></li>            
+                          
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=typeslieux" >Types de lieux</a></li>
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=lieux" class="active_menu02">Lieux</a></li>
+                                      <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=tv" >Types de véhicules</a></li>
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=catveh" >Catégories de véhicules</a></li>
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=veh" >Véhicules</a></li>
+                        </div>
+            <img class="see_more_param" src="/fleet//tpl/img/plus_ico.png" alt="See more">
+          </div>
+        </ul>
+                        <ul>
+          <li class="font-bold alarmes_menu_li"><a href="#" class=' see_more_param2'>Alarmes</a></li>
+          <div class="relative_info_bloc ss_img_bloc">
+           <div class="ss_menu">
+            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=alarme" >Alarmes Sociales</a></li>
+            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=alarme2" >Alarmes Operationelles</a></li>
+            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=alarm-vit" >Alarmes de vitesse</a></li>            
+          </div>
+          <img class="see_more_param" src="/fleet//tpl/img/plus_ico.png" alt="See more">
+          </div>
+        </ul>
+                                        <ul>
+          <li class="font-bold"><a href="#" class=' see_more_param2'>Entretien</a></li>
+          <div class="relative_info_bloc ss_img_bloc">
+            <div class="ss_menu ">
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=tyentretien" >Modification des types d'entretien</a></li>
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=alarm-entretien" >Alarmes d'entretien</a></li>
+            </div>
+            <img class="see_more_param" src="/fleet//tpl/img/plus_ico.png" alt="See more">
+          </div>
+          </ul>
+                        <ul>
+          <li class="font-bold"><a href="#" class=' see_more_param2'>Gestion du compte</a></li>
+          <div class="relative_info_bloc ss_img_bloc">
+          <div class="ss_menu ">
+            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=mdp" >Modifier mon mot de passe</a></li>
+            <!--
+            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=def-pref" >Définir mes préférences</a></li>
+            -->
+          </div>
+          <img class="see_more_param" src="/fleet//tpl/img/plus_ico.png" alt="See more">
+          </div>
+          </ul>
+          <ul>
+            <li class="font-bold"><a href="#" class=' see_more_param2'>Paramètres globaux</a></li>
+            <div class="relative_info_bloc ss_img_bloc">
+            <div class="ss_menu ">
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=etat-moteur" >Personnalisation des états moteur</a></li>
+              <!-- <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=etat-sociaux" >Personnalisation des états sociaux</a></li>  -->
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=preference" >Préférences</a></li>
+            </div>
+          <img class="see_more_param" src="/fleet//tpl/img/plus_ico.png" alt="See more">
+        </div>
+        </ul>
+    </div>
+</div> 
+    <div class="main_resize backgroundbloc">
+      <div class="resize l_bloc">
+        <h1 class="bcktitle ajust_title title_agence">Lieux</h1>
+		<div class="infobloc_param clearfix">
+            <div class="left font-bold">Nombre de lieux enregistrés :  0</div>
+          </div>
+        <div class="infobloc_param_lieu">
+          <div class="left rowElem spec_afflieu_lieu">
+              <label class="spec_margin">Afficher les lieux du type : </label>
+              <form class="spec_formselect_lieu" method="post" action="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=lieux">
+                <select name="type_lieu_compte" onchange="this.form.submit()">
+                  <option value="">Tous</option>
+                                  </select>
+              </form>
+            </div>
+            
+           
+          
+          <div class="infobloc_param_lieu">
+            <div class="clearfix spec_butt_ajoutlieu_lieu">
+              <form class="spec_form_Lieu" method="post" action="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=lieux#bas">
+              <input type="hidden" name="mode" value="add" />
+              <input id="ajout_l_button" name="" class="right submit_butt" type="submit" value="Ajouter un lieu">
+              </form>
+            </div>
+                        <!--
+            <div>
+              <input name="" class="right submit_butt importer_button_lieu" type="bouton" value="Importer des lieux depuis un fichier">
+            </div>
+            <div>
+              <input name="" class="right submit_butt exporter_button_lieu" type="bouton" value="Exporter liste des lieux">
+            </div>
+            -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- FIN MAIN CONTENT TOP -->
+<!-- DEBUT CONTAINER RESIZE -->
+  <div class="container_resize">
+    <a name="bas"></a> 
+    <div id="content_onglet_l" class="relative_info_bloc" style="display:none">
+      <form id="formLieux" name="formLieux" action="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=lieux" method="post" class="form_param_l" onsubmit="return validerLieux();">
+            <input type="hidden" name="mode" value="ajout" />
+            <div class="onglet_info_perso">
+              <h1 class="bcktitle ajust_title title_nvllealarme">Création d'un lieu</h1>
+             
+      </div>
+      <div >
+        <div class="bck_onglet_param ajust_content_onglet_l">
+          <div class="main_resize left">
+            <div class="spec_width_form_l">
+              <div class="label_input_bloc_l rowElem">
+                <label for="lieux_name">Nom :</label>
+                <input id="lieux_name" name="libelle" type="text" value="">
+              </div>
+              <div class="label_input_bloc_l rowElem">
+                <label for="">Type :</label>
+                <select name="type_lieu_compte_id">
+                                </select>  
+                <p><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=typeslieux" target="_blank">Administrer les types de lieux</a></p>          
+              </div>
+              <div class="label_input_bloc_l rowElem">
+                <label for="">Agence :</label>
+                <select name="agence_compte_id">
+                                    <option value="1" >Agence 1</option>
+                                </select>
+              </div>
+              <div class="iconebloc_l">
+                <label for="icon">Icône :</label>
+                <input type="hidden" name="icon" id="icon" value="">
+                                <img class="left" src="/fleet//tpl/img/pix.png" id="imgicon">
+                                <div class="change_icon2 left">Changer d'icône</div>
+                        
+             </div>
+             <div class="label_input_bloc_l rowElem spec_label_cb_l">
+                <label for="">Affichage :</label>
+                <input name="affichage" type="checkbox" value="1" >
+               <p>(Ce lieu sera affiché sur les différentes cartes.)</p>
+              </div>
+              <div class="label_input_bloc_l rowElem spec_label_cb_l">
+                <label for="">Alarme :</label>
+                <input name="alarme" type="checkbox" value="1" >
+                <p>(Ce lieu sera utilisé pour générer des alarmes.)</p>
+              </div>
+            </div> 
+          </div>
+          <div class="main_resize left">
+            <div class="spec_width_form_l">
+              <div class="label_input_bloc_l rowElem">
+                <label for="latlieux_name">Latitude (mettre 0 si non connu) :</label>
+                <input id="latlieux_name" name="latitude" type="text" value="">
+              </div>
+              <div class="label_input_bloc_l rowElem">
+                <label for="longlieux_name">Longitude (mettre 0 si non connu):</label> 
+                <input id="longlieux_name"  name="longitude" type="text" value="">
+                 <p>Coordonnées au format Décimaux entiers (ex: 48.8005 / 2.1297)</p> 
+              </div> 
+              <div class="label_input_bloc_l rowElem">
+                <label for="rayonlieux_name">Rayon (en m) :</label>
+                <input id="rayonlieux_name" name="rayon" type="text" input="text" value="">
+              </div>
+              <div class="label_input_bloc_l rowElem">
+                <label for="rayonlieux_name">Adresse :<br> </label>
+                <textarea  name="adresse" id="adresse"></textarea>
+                <p>Si vous ne connaissez pas les coordonnées</p>
+              </div>
+            </div>
+          </div> 
+        </div>
+        <div class="pagination_onglet_alarm">
+          <input type="submit" value="Valider" class="right submit_butt" id="button_next_alarm">  
+          <input id="button_l_annuler" type="button" value="Annuler" class="left button_butt">
+        </div>
+      </form>
+ 
+    </div>
+         <div class="modal_test2">
+        <div class="position_info_bloc">
+          <h1>Icônes</h1>
+          
+                      <div class="spec_icon_zone3 left">
+                        <a href="javascript:chooseicon('airport.gif')"><img class="left" src="/fleet//tpl/img/lieux/airport.gif"></a>
+                      <a href="javascript:chooseicon('building.gif')"><img class="left" src="/fleet//tpl/img/lieux/building.gif"></a>
+                      <a href="javascript:chooseicon('cross0.gif')"><img class="left" src="/fleet//tpl/img/lieux/cross0.gif"></a>
+                      <a href="javascript:chooseicon('cross1.gif')"><img class="left" src="/fleet//tpl/img/lieux/cross1.gif"></a>
+                      <a href="javascript:chooseicon('cross2.gif')"><img class="left" src="/fleet//tpl/img/lieux/cross2.gif"></a>
+                      <a href="javascript:chooseicon('cross3.gif')"><img class="left" src="/fleet//tpl/img/lieux/cross3.gif"></a>
+                      <a href="javascript:chooseicon('cross4.gif')"><img class="left" src="/fleet//tpl/img/lieux/cross4.gif"></a>
+                      <a href="javascript:chooseicon('cross5.gif')"><img class="left" src="/fleet//tpl/img/lieux/cross5.gif"></a>
+                      <a href="javascript:chooseicon('cross6.gif')"><img class="left" src="/fleet//tpl/img/lieux/cross6.gif"></a>
+                      </div>
+                        <div class="spec_icon_zone3 left">
+                        <a href="javascript:chooseicon('cross7.gif')"><img class="left" src="/fleet//tpl/img/lieux/cross7.gif"></a>
+                      <a href="javascript:chooseicon('cross8.gif')"><img class="left" src="/fleet//tpl/img/lieux/cross8.gif"></a>
+                      <a href="javascript:chooseicon('cross9.gif')"><img class="left" src="/fleet//tpl/img/lieux/cross9.gif"></a>
+                      <a href="javascript:chooseicon('donut0.gif')"><img class="left" src="/fleet//tpl/img/lieux/donut0.gif"></a>
+                      <a href="javascript:chooseicon('donut1.gif')"><img class="left" src="/fleet//tpl/img/lieux/donut1.gif"></a>
+                      <a href="javascript:chooseicon('donut2.gif')"><img class="left" src="/fleet//tpl/img/lieux/donut2.gif"></a>
+                      <a href="javascript:chooseicon('donut3.gif')"><img class="left" src="/fleet//tpl/img/lieux/donut3.gif"></a>
+                      <a href="javascript:chooseicon('donut4.gif')"><img class="left" src="/fleet//tpl/img/lieux/donut4.gif"></a>
+                      <a href="javascript:chooseicon('donut5.gif')"><img class="left" src="/fleet//tpl/img/lieux/donut5.gif"></a>
+                      </div>
+                        <div class="spec_icon_zone3 left">
+                        <a href="javascript:chooseicon('donut6.gif')"><img class="left" src="/fleet//tpl/img/lieux/donut6.gif"></a>
+                      <a href="javascript:chooseicon('donut7.gif')"><img class="left" src="/fleet//tpl/img/lieux/donut7.gif"></a>
+                      <a href="javascript:chooseicon('donut8.gif')"><img class="left" src="/fleet//tpl/img/lieux/donut8.gif"></a>
+                      <a href="javascript:chooseicon('donut9.gif')"><img class="left" src="/fleet//tpl/img/lieux/donut9.gif"></a>
+                      <a href="javascript:chooseicon('factory.gif')"><img class="left" src="/fleet//tpl/img/lieux/factory.gif"></a>
+                      <a href="javascript:chooseicon('house.gif')"><img class="left" src="/fleet//tpl/img/lieux/house.gif"></a>
+                      <a href="javascript:chooseicon('meca.gif')"><img class="left" src="/fleet//tpl/img/lieux/meca.gif"></a>
+                      <a href="javascript:chooseicon('medic0.gif')"><img class="left" src="/fleet//tpl/img/lieux/medic0.gif"></a>
+                      <a href="javascript:chooseicon('medic1.gif')"><img class="left" src="/fleet//tpl/img/lieux/medic1.gif"></a>
+                      </div>
+                        <div class="spec_icon_zone3 left">
+                        <a href="javascript:chooseicon('medic2.gif')"><img class="left" src="/fleet//tpl/img/lieux/medic2.gif"></a>
+                      <a href="javascript:chooseicon('parking.gif')"><img class="left" src="/fleet//tpl/img/lieux/parking.gif"></a>
+                    <img src="/fleet//tpl/img/cross29.png" class="position_absolute close_img">
+        </div>
+      </div>
+  </div>
+  <!-- FIN CONTAINER RESIZE -->
+   
+</div>
+
+<!-- FIN CONTAINER -->
+
+
+    </div><!-- end .main-wrapper -->
+  <div id="map_bloc" class="map_bloc">
+    <div id="bandeau_map" class="bandeau_map">
+      <span id="full_leave_screen">Plein écran 
+      <a href="javascript:showmap()"><img class="full_screen_icon" src="/fleet//tpl/img/fullsreen_ico.png"></a>
+      </span>
+    </div>
+    <div id="map" class="littlemap"></div>
+  </div> 
+    <script src="/fleet//tpl/js/app.js"></script>
+    
+    <script src="/fleet//tpl/js/parametre-lieux.js"></script>
+    <script src="/fleet//tpl/js/parametre-menu.js"></script>
+    
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<script>
+  var tab=new Array();
+    
+  racineimg="/fleet/";
+  (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+  function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+  e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+  e.src='//www.google-analytics.com/analytics.js';
+  r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+  ga('create','UA-XXXXX-1');ga('send','pageview');
+</script>
+
+  </body>
+</html>

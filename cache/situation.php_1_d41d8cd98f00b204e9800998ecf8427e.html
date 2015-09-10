@@ -1,0 +1,85 @@
+<meta http-equiv="refresh" content="60"> 
+<div class="container">     
+  <div class="main_resize">
+    <div class="resize filter_info">
+      <h1 class="bcktitle ajust_title">FILTRER LES INFORMATIONS</h1>
+      <form class="" method="post">
+        <div class="rowElem">
+          <label>Etat</label>
+          <select class="" name="etat">         
+          <option value="">Choisir</option>
+                      <option value="1" >Moteur allumé</option>
+                      <option value="0" >Moteur éteint</option>
+              
+          </select>
+        </div>
+        <!--<div class="rowElem">
+          <label>Type</label>
+          <select class="" name="type">
+            <option value="">Choisir</option>
+                          <option value="2" >Camion</option>
+                          <option value="3" >Utilitaire</option>
+                          <option value="1" >Voiture</option>
+                      </select>
+        </div>
+        <div class="rowElem">
+          <label>Catégorie</label>
+          <select class="" name="categorie">
+            <option value="">Choisir</option>
+                      </select>
+        </div>
+                <input type="hidden" name="agence" value="1"/>
+        -->
+        <div class="content_filt_input rowElem">
+          <label class="lastlabel_situation">Nom</label>
+          <input class="filt_input" name="nom" type="text" value="">
+        </div>
+        <div class="content_filt_submit">
+          <input class="submit_butt" type="submit" value="Filtrer">
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="main_resize backgroundbloc ajustmargin">
+    <div class="resize situation_flotte">
+      <h1 class="bcktitle ajust_title">Situation de la flotte</h1>
+      <div class="info_situationflotte">
+        <p>Compte : <span >raison</span></p>
+        <p>Nombre de véhicules : <span> 0</span></p>
+        <p>Nombre de véhicules en activité : <span> 0</span></p>
+        <p>Nombre de véhicules à l'arrêt : <span> 0</span></p>
+      </div>
+          <a href="/fleet//tpl/script/export.php?template=situation&args=&menu=Date%2C%C3%A9tat%2CV%C3%A9hicule%2Cposition&champs=time%2Cmoteur%2Cnomvehicule%2Cadresse"><img src="/fleet//tpl/img/telecharger_ico.png"></a>
+      </div>
+  </div>
+  <div class="bottom_content">
+    <table class="tableau_content">
+      <tr>
+        <th><div class="active_tableau"><a href="#">Date</a></div></th>
+        <th><div><a href="">état</a></div></th>
+        <th><div><a href="">Véhicule</a></div></th>
+        <th><div><a nohref>Position</a></div></th>
+		         <th><div><a nohref>Entretien</a></div></th>
+      </tr>
+          
+    </table>
+  </div>
+</div>
+    </div><!-- end .main-wrapper -->
+    <script src="/fleet//tpl/js/app.js"></script>
+    <script src="/fleet//tpl/fancybox/jquery.fancybox.pack.js"></script>
+    <script src="/fleet//tpl/js/situation.js"></script>
+    
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<script>
+  racineimg="/fleet/";
+  (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+  function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+  e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+  e.src='//www.google-analytics.com/analytics.js';
+  r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+  ga('create','UA-XXXXX-1');ga('send','pageview');
+</script>
+
+  </body>
+</html>

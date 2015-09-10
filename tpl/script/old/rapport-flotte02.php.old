@@ -1,0 +1,150 @@
+<?
+$where="";
+
+$_POST["date_jour"]=($_POST["date_jour"]=="")?date('d/m/Y'):$_POST["date_jour"];
+
+
+if($_POST["date_jour"]!=""){   
+  $where.=" and addtime(min_time_stamp,'".__decalageheure__.":0:0')>='".datebdd(jourdebutsemaine(date2tab($_POST["date_jour"])))." 00:00:00'";
+  $where.=" and addtime(max_time_stamp,'".__decalageheure__.":0:0')<='".datebdd(jourfinsemaine(date2tab($_POST["date_jour"])))." 23:59:59'";
+}
+//print $where;
+$sql="select * from ".__racinebd__."type_compte where compte_id=".$_SESSION["compte_id"]." and supprimer=0 order by libelle";
+$link=query($sql);
+
+while($tbl=fetch($link)){
+  $tbl_list_type[]=$tbl;
+  $key_list_type[$tbl["type_compte_id"]]=$tbl["libelle"];
+}
+
+if($_POST["agence"]!=""){
+  $where2=" and agence_compte_id=".$_POST["agence"];
+}
+
+//print $_POST["date_jour"]; 
+$nottoday=(dateDifference(datebdd($_POST["date_jour"]),date('Y/m/d'),'%d')==0)?false:true;
+
+$totalkm=0;
+$totaldistance=0;
+$totalconso=0;
+$sql=getsqllistvehiculerapport($where).$where2;
+//print $sql; 
+$link=query($sql);
+while($tbl=fetch($link)){
+  if($tbl["phantom_device_id"]!=""&&$tbl["mintime"]!=""){
+  //print_r($tbl);
+  $sql="select * from ".__racinebd__."categorie_compte_device ccd
+        inner join ".__racinebd__."categorie_compte cc on ccd.categorie_compte_id=cc.categorie_compte_id where device_id=".$tbl["phantom_device_id"];
+  //print $sql;
+  $link2=query($sql);
+  $tbl_list_cat=array();
+  while($tbl2=fetch($link2)){
+    $tbl_list_cat[]=$tbl2["libelle"];
+  }
+  $tbl["listcat"]=implode(", ",$tbl_list_cat);
+  //calcul du temps
+  
+  //consotheorique
+  if($tbl["consommationtype"]==1){
+    $sql="select * from ".__racinebd__."type_compte where compte_id=".$_SESSION["compte_id"]." and type_compte_id=".$tbl["type_compte_id"];
+    $link2=query($sql);
+    $tbl2=fetch($link2);
+    $tbl["consotheorique"]=$tbl2["consommation"];
+  }else{
+    $tbl["consotheorique"]=$tbl["consommation"];
+  }
+  /*
+  print $tbl["mintime"]."<br>";
+  print $tbl["maxtime"];
+  */
+  
+  
+  
+  //$tbl["datediff"]=dateDifference($tbl["mintime"] , $tbl["maxtime"] , '%h H %i Min' );
+  $tbl["datediff"]=dateDifference($tbl["mintime"] , $tbl["maxtime"] , '%d Jours  %h H %i Min' );
+  //vitesse track_data
+  $sql="select max(ground_speed) as speed from 
+  track_data td 
+  inner join track_info ti on ti.track_info_id=td.track_info_id and owner_id=".$tbl["user_id"]."
+  where addtime(td.time_stamp,'".__decalageheure__.":0:0')>='".datebdd(jourdebutsemaine(date2tab($_POST["date_jour"])))." 00:00:00' and addtime(td.time_stamp,'".__decalageheure__.":0:0')<='".datebdd(jourfinsemaine(date2tab($_POST["date_jour"])))." 23:59:59'";
+  
+  //print $sql;
+  $linkvitesse=query($sql);
+  $tblvitesse=fetch($linkvitesse);
+  $tbl["vitesse"]=vitessekmh($tblvitesse["speed"]);
+  
+  /*
+  $sql="select ROUND(SUM(TIME_TO_SEC(TIMEDIFF( ti.max_time_stamp,ti.min_time_stamp))/60)) as conduite from 
+  track_info_mod ti 
+  where addtime(ti.min_time_stamp,'".__decalageheure__.":0:0')>='".datebdd($_POST["date_jour"])." 00:00:00' and addtime(ti.max_time_stamp,'".__decalageheure__.":0:0')<='".datebdd($_POST["date_jour"])." 23:59:59' and owner_id=".$tbl["user_id"];
+  
+  */
+  /*
+  $sql="select ROUND(SUM(TIME_TO_SEC(TIMEDIFF(min(time_stamp),max(time_stamp)) as speed from 
+  track_data_mod td 
+  inner join track_info ti on ti.track_info_id=td.track_info_id and owner_id=".$tbl["user_id"]."
+  where addtime(td.time_stamp,'".__decalageheure__.":0:0')>='".datebdd($_POST["date_jour"])." 00:00:00' and addtime(td.time_stamp,'".__decalageheure__.":0:0')<='".datebdd($_POST["date_jour"])." 23:59:59'";
+  */
+  
+  $sql="select *,addtime(td.time_stamp,'".__decalageheure__.":0:0') timestp from track_data td inner join track_info ti on ti.track_info_id=td.track_info_id and owner_id=".$tbl["user_id"]." 
+  where addtime(td.time_stamp,'".__decalageheure__.":0:0')>='".datebdd(jourdebutsemaine(date2tab($_POST["date_jour"])))." 00:00:00' and addtime(td.time_stamp,'".__decalageheure__.":0:0')<='".datebdd(jourfinsemaine(date2tab($_POST["date_jour"])))." 23:59:59' and valid=1 and deleted=0 
+  ORDER BY `td`.`time_stamp`  ASC";
+    
+  //print $sql."<br>";
+  
+  $linkconduite=query($sql);
+  $tbl["conduite"]=0;
+  $lastspeed=0;
+  $lastlat=0;
+  $lastlon=0;
+  $lastdistance=0;
+  $totalconduite=0;
+  $totalarret=0;
+  $trajet=array();
+  $i=0;
+  while($tblconduite=fetch($linkconduite)){
+    if($lastspeed!=$tblconduite["ground_speed"]&&$lastspeed==0){
+      $trajet[$i][0]=$tblconduite["timestp"];
+      $trajet[$i][1]=0;  
+    }
+    if($lastspeed!=$tblconduite["ground_speed"]&&$tblconduite["ground_speed"]==0&&$lastspeed!=0){
+      $trajet[$i++][1]=$tblconduite["timestp"];
+    }    
+    $lastspeed=$tblconduite["ground_speed"];
+  }
+  //print_r($trajet);
+  for($i=0;$i<count($trajet);$i++){
+    $debut=strtotime($trajet[$i][0]);
+    $fin=($trajet[$i][1]==0)?strtotime($tblconduite["timestp"]):strtotime($trajet[$i][1]);    
+    $tbl["conduite"]+=round(($fin-$debut)/60);
+  }
+  $totalconduite+= $tbl["conduite"];
+  $tbl["mintime"]=$trajet[0][0];
+  $tbl["maxtime"]=($trajet[count($trajet)-1][1]==0)?$tblconduite["timestp"]:$trajet[count($trajet)-1][1];
+
+  
+  //$tbl["datediff"]=dateDifference($tbl["mintime"] , $tbl["maxtime"] , '%h H %i Min' );
+  $tbl["datediff"]=dateDifference($tbl["mintime"] , $tbl["maxtime"] , '%d Jours  %h H %i Min' );
+  //print strtotime($tbl["maxtime"])-strtotime($tbl["mintime"]);
+  //$tbl["arret"]=date('h\H i ',(strtotime($tbl["maxtime"])-strtotime($tbl["mintime"])-$tbl["conduite"]*60));
+  /*
+  print date('F j, Y, g:i a',(strtotime($tbl["maxtime"])));
+  print date('F j, Y, g:i a',(strtotime($tbl["mintime"])));
+  */
+  $tbl["arret"]=secondsToTime(strtotime($tbl["maxtime"])-strtotime($tbl["mintime"])-3600-$tbl["conduite"]*60);
+  $totalarret+=(strtotime($tbl["maxtime"])-strtotime($tbl["mintime"])-3600-$tbl["conduite"]*60);
+  /*  
+  $tbl["arret"]=$tbl["datediff"]-$tbl["conduite"];  
+  */
+  //print_r($trajet);
+  
+  $totalkm+=($tbl["kminit"]+$tbl["km"]+$tbl["correctifkm"]);
+  $totaldistance+=($tbl["km"]);
+  $totalconso+=$tbl["consotheorique"]*((int)$tbl["km"])/100;
+  $tbl["conso"]=$tbl["consotheorique"]*((int)$tbl["km"])/100;
+  $tbl_list_vehicule[]=$tbl;
+  
+  }
+}
+$tbl_list_export=$tbl_list_vehicule;
+?>

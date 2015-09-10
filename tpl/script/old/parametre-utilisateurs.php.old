@@ -1,0 +1,278 @@
+<?
+if($_POST["mode"]=="delete"){
+   $sql="update users set active=0 where user_id=".$_POST["id"];
+   query($sql);
+   $msgsave="Suppression effectuée";
+}
+
+//sauvegarde de modification
+if($_POST["id"]!=""&&$_POST["mode"]=="modif"){
+    if($_POST["pwd"]!=""){
+      $pwd=",password='".md5($_POST["pwd"])."'";
+    }
+    
+    $sql="update users set 
+    username='".addquote($_POST["username"])."',
+    name='".addquote($_POST["name"])."',
+    surname='".addquote($_POST["surname"])."',         
+    email='".addquote($_POST["email"])."'
+    $pwd
+    where user_id=".$_POST["id"];
+    query($sql);
+    
+    //modification de la table device
+    $sql="update `device` set email='".addquote($_POST["email"])."' where device_name='email' and owner_id=".$_POST["id"];
+    query($sql);
+    
+    //creation d'une liaison phantom_usergps
+    $sql="update ".__racinebd__."usergps set tel='".addquote($_POST["tel"])."' where user_id=".$_POST["id"];
+    query($sql);
+    
+    //sauvegarde des agences
+    $sql="delete from ".__racinebd__."agence_compte_usergps where usergps_id=".$_POST["idgps"];
+    query($sql);
+    for($i=0;$i<count($_POST["agence"]);$i++){
+      $sql="insert into ".__racinebd__."agence_compte_usergps (usergps_id,agence_compte_id) values(".$_POST["idgps"].",".$_POST["agence"][$i].")";
+      query($sql);  
+    } 
+    
+    //sauvegarde des vehicules
+    $sql="delete from ".__racinebd__."usergps_device where usergps_id=".$_POST["idgps"];
+    query($sql);
+    for($i=0;$i<count($_POST["vehicule"]);$i++){
+      $sql="insert into ".__racinebd__."usergps_device (usergps_id,user_id) values(".$_POST["idgps"].",".$_POST["vehicule"][$i].")";
+      query($sql);  
+    }
+    //sauvegarde des modules
+    $sql="delete from ".__racinebd__."module_usersgps where usergps_id=".$_POST["idgps"];
+    query($sql);
+    for($i=0;$i<count($_POST["module"]);$i++){
+      $sql="insert into ".__racinebd__."module_usersgps (usergps_id,module_id) values(".$_POST["idgps"].",".$_POST["module"][$i].")";
+      query($sql);  
+    }
+    
+    //sauvegarde des jours
+    $sql="delete from ".__racinebd__."jour_usersgps where usergps_id=".$_POST["idgps"];
+    query($sql);
+    for($i=0;$i<count($_POST["jour"]);$i++){
+      $sql="insert into ".__racinebd__."jour_usersgps (usergps_id,jour_id) values(".$_POST["idgps"].",".$_POST["jour"][$i].")";
+      query($sql);  
+    }
+    
+    //sauvegarde des rapports
+    $sql="delete from ".__racinebd__."rapport_usersgps where usergps_id=".$_POST["idgps"];
+    query($sql);
+    for($i=0;$i<count($_POST["rapport"]);$i++){
+      $sql="insert into ".__racinebd__."rapport_usersgps (usergps_id,rapport_id) values(".$_POST["idgps"].",".$_POST["rapport"][$i].")";
+      query($sql);  
+    }
+    $msgsave="Sauvegarde effectuée";
+}
+
+
+//sauvegarde d'ajout
+if($_POST["id"]==""&&$_POST["mode"]=="ajout"){
+    $szQuery="insert into users (username,name,surname,email,active,created,bo_type,original_application_id,password_hash,password_salt,password)
+    values ('".addquote($_POST["username"])."','".addquote($_POST["name"])."','".addquote($_POST["surname"])."','".addquote($_POST["email"])."',
+    '1','now()','GpsGate.Online.GateUser','".$_SESSION["application_id"]."',
+    'gIbGwS2UdC52I4sqaoq/xjwR/08=','n/8hovkikkEyjofw62uwuxezyE4=','".md5($_POST["pwd"])."')";
+    $link=query($szQuery);
+    $id=insert_id();
+    
+    //on recherche les groupes affectés à la nouvelle application
+    $sql="select * from groups where application_id=".$_SESSION["application_id"];
+    $link=query($sql);
+    while($tbl=fetch($link)){
+      if($tbl["group_name"]=='Vehicles'){
+      $sql="INSERT INTO `user_groups` (`user_id`, `group_id`, `group_right_id`, `admin_right_id`, `enable_public_tracks`) VALUES
+            ($id, ".$tbl["group_id"].", 7, 3, NULL)";
+      }else{
+      $sql="INSERT INTO `user_groups` (`user_id`, `group_id`, `group_right_id`, `admin_right_id`, `enable_public_tracks`) VALUES
+            ($id, ".$tbl["group_id"].", 1, 6, NULL)";
+      }
+      query($sql);
+    }
+    
+    $sql="INSERT INTO `device` (`device_name`, `bo_type`, `created`, `owner_id`, `hide_position`, `proximity`, `IMEI`, `phone_number`, `last_ip`, `last_port`, `static_ip`, `static_port`, `longitude`, `latitude`, `ground_speed`, `altitude`, `heading`, `time_stamp`, `milliseconds`, `protocol_id`, `protocol_version_id`, `valid`, `apn`, `gprs_username`, `gprs_password`, `dev_def_id`, `msg_field_dict_id`, `mobile_network_id`, `outgoing_transport`, `email`, `device_password`) VALUES
+    ('Email', 'GpsGate.Online.Directory.Device', now(), $id, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Plain', NULL, NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, '".addquote($_POST["email"])."', NULL)";
+    query($sql);
+
+    //creation d'une liaison phantom_usergps
+    $sql="insert into ".__racinebd__."usergps (user_id,tel) values('".$id."','".addquote($_POST["tel"])."')";
+    query($sql);
+    $usergpd_id=insert_id();
+    
+    //sauvegarde des agences
+    for($i=0;$i<count($_POST["agence"]);$i++){
+      $sql="insert into ".__racinebd__."agence_compte_usergps (usergps_id,agence_compte_id) values(".$usergpd_id.",".$_POST["agence"][$i].")";
+      query($sql);  
+    } 
+    
+    //sauvegarde des vehicules
+    for($i=0;$i<count($_POST["vehicule"]);$i++){
+      $sql="insert into ".__racinebd__."usergps_device (usergps_id,user_id) values(".$usergpd_id.",".$_POST["vehicule"][$i].")";
+      query($sql);  
+    }
+    //sauvegarde des modules
+    for($i=0;$i<count($_POST["module"]);$i++){
+      $sql="insert into ".__racinebd__."module_usersgps (usergps_id,module_id) values(".$usergpd_id.",".$_POST["module"][$i].")";
+      query($sql);  
+    }
+    
+    //sauvegarde des jours
+    for($i=0;$i<count($_POST["jour"]);$i++){
+      $sql="insert into ".__racinebd__."jour_usersgps (usergps_id,jour_id) values(".$usergpd_id.",".$_POST["jour"][$i].")";
+      query($sql);  
+    }
+    
+    //sauvegarde des rapports
+    for($i=0;$i<count($_POST["rapport"]);$i++){
+      $sql="insert into ".__racinebd__."rapport_usersgps (usergps_id,rapport_id) values(".$usergpd_id.",".$_POST["rapport"][$i].")";
+      query($sql);  
+    }
+    $msgsave="Sauvegarde effectuée";
+}
+
+$sql = "select t.*,u.usergps_id from users t 
+        inner join ".__racinebd__."compte c on c.application_id=t.original_application_id 
+        inner join ".__racinebd__."usergps u on u.user_id=t.user_id 
+        where active=1 and user_template_id is null and compte_id=".$_SESSION["compte_id"];
+$link=query($sql);	
+while($tbl=fetch($link)){
+  //recherche des modules
+  $sql="select cm.*,count(cm.cat_module_id) as nb from ".__racinebd__."cat_module cm inner join ".__racinebd__."module m on cm.cat_module_id=m.cat_module_id group by cm.cat_module_id";
+  $link2=query($sql);
+  $content="";
+  while($tbl2=fetch($link2)){
+    $sql="select * from ".__racinebd__."module_usersgps u
+    inner join ".__racinebd__."module cm on cm.module_id=u.module_id
+    where usergps_id=".$tbl["usergps_id"]." and cat_module_id=".$tbl2["cat_module_id"];
+    //print $sql."<br>";
+    $link3=query($sql);
+    $content.="<div>".$tbl2["libelle"]." : <span> ".num_rows($link3)."/".$tbl2["nb"]." </span></div>";
+  }
+  $tbl["module"]=$content;  
+  //recherche du nombre de vehicule
+  $sql="select * from ".__racinebd__."usergps_device where usergps_id=".$tbl["usergps_id"];
+  $link4=query($sql);
+  $tbl["nbvehicule"]=num_rows($link4);    
+  //recherche du nombre de jour
+  $sql="select * from ".__racinebd__."jour_usersgps where usergps_id=".$tbl["usergps_id"];
+  $link4=query($sql);
+  $tbl["nbjour"]=num_rows($link4);
+  $tbl_list_user[]=$tbl;
+}	
+//print_r($tbl_list_user);	
+
+if($_POST["id"]!=""&&$_POST["mode"]==""){
+  $sql = "select t.*,u.usergps_id,u.tel from users t 
+        inner join ".__racinebd__."compte c on c.application_id=t.original_application_id 
+        inner join ".__racinebd__."usergps u on u.user_id=t.user_id 
+        where active=1 and user_template_id is null and compte_id=".$_SESSION["compte_id"]." and t.user_id=".$_POST["id"];   
+   $link=query($sql);
+   $tbl_modif_user=fetch($link);
+}
+
+$nbchk=0;
+$sql="select * from ".__racinebd__."agence_compte where compte_id=".$_SESSION["compte_id"]." and supprimer=0 order by libelle";
+$link=query($sql);
+while($tbl=fetch($link)){
+  //on verifie si l'agence est selectionnée
+  $tbl["checked"]=false;
+  if($_POST["id"]!=""&&$_POST["mode"]!="delete"){
+    $sql="select * from ".__racinebd__."agence_compte_usergps where usergps_id=".$_POST["idgps"]." and agence_compte_id=".$tbl["agence_compte_id"];
+    //print $sql;
+    $link2=query($sql);
+    if(num_rows($link2)>0){
+      $tbl["checked"]=true;
+      $nbchk++;  
+    }
+  }
+  $tbl_list_agence[]=$tbl;
+}
+
+$sql=getsqllistvehicule();
+$link=query($sql);
+while($tbl=fetch($link)){
+  //on verifie si le vehicule est selectionné
+  $tbl["checked"]=false;
+  if($_POST["id"]!=""&&$_POST["mode"]!="delete"){
+    $sql="select * from ".__racinebd__."usergps_device where usergps_id=".$_POST["idgps"]." and user_id=".$tbl["user_id"];
+    
+    $link2=query($sql);
+    if(num_rows($link2)>0){
+      $tbl["checked"]=true;
+      $nbchk++;  
+    }
+  }
+  $tbl_list_vehicule[]=$tbl;
+}
+
+$sql="select * from ".__racinebd__."cat_module";
+$link=query($sql);
+$content="<div class=\"left main_resize\">";
+$i=0;
+while($tbl=fetch($link)){
+$content.="
+  <div class=\"p_checkbox_veh\">
+    <p>".$tbl["libelle"]."</p>";
+    
+    $sql="select * from ".__racinebd__."module cm 
+    where cat_module_id=".$tbl["cat_module_id"];
+    $link2=query($sql);
+    while($tbl2=fetch($link2)){
+      //on verifie si le vehicule est selectionné
+      $checked="";
+      if($_POST["id"]!=""&&$_POST["mode"]!="delete"){
+        $sql="select * from ".__racinebd__."module_usersgps where usergps_id=".$_POST["idgps"]." and module_id=".$tbl2["module_id"];
+        $link3=query($sql);
+        if(num_rows($link3)>0){
+          $checked="checked";
+        }
+      }
+      $content.="
+      <div class=\"checkbox_veh\">
+        <input type=\"checkbox\" name=\"module[]\" value=\"".$tbl2["module_id"]."\" ".$checked.">
+        <label>".$tbl2["libelle"]."</label>
+      </div>";
+    }
+  $content.="</div>";
+  if($i++==1){
+  $content.="</div>";
+  }
+}
+
+$sql="select * from ".__racinebd__."jour";
+$link=query($sql);
+while($tbl=fetch($link)){
+  //on verifie si le jour est selectionné
+  $tbl["checked"]=false;
+  if($_POST["id"]!=""&&$_POST["mode"]!="delete"){
+    $sql="select * from ".__racinebd__."jour_usersgps where usergps_id=".$_POST["idgps"]." and jour_id=".$tbl["jour_id"];
+    $link2=query($sql);
+    if(num_rows($link2)>0){
+      $tbl["checked"]=true;
+ 
+    }
+  }
+  $tbl_list_jour[]=$tbl;
+}
+
+$sql="select * from ".__racinebd__."rapport";
+$link=query($sql);
+while($tbl=fetch($link)){
+  //on verifie si le rapport est selectionné
+  $tbl["checked"]=false;
+  if($_POST["id"]!=""&&$_POST["mode"]!="delete"){
+    $sql="select * from ".__racinebd__."rapport_usersgps where usergps_id=".$_POST["idgps"]." and rapport_id=".$tbl["rapport_id"];
+    $link2=query($sql);
+    if(num_rows($link2)>0){
+      $tbl["checked"]=true;
+       
+    }
+  }
+  $tbl_list_rapport[]=$tbl;
+}
+
+
+?>

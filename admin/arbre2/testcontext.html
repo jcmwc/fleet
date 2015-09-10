@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>jQuery contextMenu Plugin Demo</title>
+    <meta name="description" content="simple contextMenu generator for interactive web applications based on jQuery" />
+
+    <script src="jquery/jquery.js" type="text/javascript"></script>
+	  <script src="jquery/jquery-ui.custom.js" type="text/javascript"></script>
+    <script src="contextmenu/jquery.contextMenu.js" type="text/javascript"></script>
+    <link href="contextmenu/jquery.contextMenu2.css" rel="stylesheet" type="text/css" >
+
+    
+</head>
+<body>
+
+    <h2 id="commands">Demo: Context Menu with sub-menus</h2>
+    <script type="text/javascript">
+      // --- Contextmenu helper --------------------------------------------------
+      function bindContextMenu(span) {
+        alert(span)
+        // Add context menu to this node:
+        $(span).contextMenu({selector: '.context-menu-subsub', items: {
+                edit: {name: "Edit", icon: "edit", callback: printKey},
+                cut: {name: "Cut", icon: "cut", callback: printKey},
+                copy: {name: "Copy", icon: "copy", callback: printKey},
+                paste: {name: "Paste", icon: "paste", callback: printKey},
+                "delete": {name: "Delete", icon: "delete", callback: printKey},
+                sep1: "---------",
+                quit: {name: "Quit", icon: "quit", callback: printKey},
+                sep2: "---------",
+                fold1: {name: "Sub group", items: {
+                    "fold1-key1": {name: "Foo bar", callback: printKey},
+                    fold2: {name: "Sub group 2", items: {
+                        "fold2-key1": {name: "Foo bar 2", callback: printKey},
+                        "fold2-key2": {name: "Foo baz 2", callback: printKey},
+                        "fold2-key3": {name: "Bar Baz 2", callback: printKey}
+                    }},
+                    "fold1-key3": {name: "Bar Baz", callback: printKey}
+                }}
+            }});
+      };
+      function printKey(key, opt) {
+                alert(key)
+                alert(opt)
+                window.console && console.log("clicked: " + key);
+            }
+    
+        $(function(){
+            
+            
+            /**************************************************
+             * Context-Menu with Sub-Menu
+             **************************************************/
+            
+            $.contextMenu({selector: '.context-menu-subsub', items: {
+                edit: {name: "Edit", icon: "edit", callback: printKey},
+                cut: {name: "Cut", icon: "cut", callback: printKey},
+                copy: {name: "Copy", icon: "copy", callback: printKey},
+                paste: {name: "Paste", icon: "paste", callback: printKey},
+                "delete": {name: "Delete", icon: "delete", callback: printKey},
+                sep1: "---------",
+                quit: {name: "Quit", icon: "quit", callback: printKey},
+                sep2: "---------",
+                fold1: {name: "Sub group", items: {
+                    "fold1-key1": {name: "Foo bar", callback: printKey},
+                    fold2: {name: "Sub group 2", items: {
+                        "fold2-key1": {name: "Foo bar 2", callback: printKey},
+                        "fold2-key2": {name: "Foo baz 2", callback: printKey},
+                        "fold2-key3": {name: "Bar Baz 2", callback: printKey}
+                    }},
+                    "fold1-key3": {name: "Bar Baz", callback: printKey}
+                }}
+            }});
+            
+            //bindContextMenu($(".context-menu-subsub"));
+            
+                $('<button>add menu1</button>').bind('click', function(){
+                    $('<div class="context-menu-subsub box menu-2"><strong>menu1</strong> <em>(injected)</em></div>')
+                        .appendTo($('.inline-spaces'));
+                }).insertBefore($('.inline-spaces'));;
+            
+        });
+    </script>
+    <div class="inline-spaces">
+        <div class="context-menu-subsub box menu-2">
+            <strong>menu1</strong>
+        </div>
+    </div>
+
+    </div>
+</body>
+</html>

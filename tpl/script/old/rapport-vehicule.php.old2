@@ -1,0 +1,145 @@
+<?
+$_POST["date_jour"]=($_POST["date_jour"]=="")?date('d/m/Y'):$_POST["date_jour"];
+
+  /*
+  $sql="select td.*,addtime(td.time_stamp,'".__decalageheure__.":0:0') timestp from track_data td 
+  inner join track_info ti on ti.track_info_id=td.track_info_id and owner_id=".$_POST["vehicule"]."
+  where addtime(td.time_stamp,'".__decalageheure__.":0:0')>='".datebdd($_POST["date_jour"])." 00:00:00' and addtime(td.time_stamp,'".__decalageheure__.":0:0')<='".datebdd($_POST["date_jour"])." 23:59:59' and valid=1 and deleted=0 
+  ORDER BY `td`.`time_stamp`  ASC";
+  */
+  //vérification des paramêtres du compte
+  $sql="select * from ".__racinebd__."preference_compte where compte_id=".$_SESSION["compte_id"];
+  $link=query($sql);
+  $tbl_preference=fetch($link);
+  $dureeminattente=$tbl_preference["dureeminattente"];
+  //print $dureemintraj;
+  
+  $sql="select td.*,addtime(td.time_stamp,'".__decalageheure__.":0:0') timestp from track_data td 
+  inner join track_info ti on ti.track_info_id=td.track_info_id and owner_id=".$_POST["vehicule"]."
+  where addtime(td.time_stamp,'".__decalageheure__.":0:0')>='".datebdd($_POST["date_jour"])." 00:00:00' and addtime(td.time_stamp,'".__decalageheure__.":0:0')<='".datebdd($_POST["date_jour"])." 23:59:59' and valid=1 
+  ORDER BY `td`.`time_stamp`  ASC"; 
+  //print $sql;
+  $linkconduite=query($sql);
+  $tbl["conduite"]=0;
+  $lastspeed=0;
+  $lastlat=0;
+  $lastlon=0;
+  $lastdistance=0;
+  $totalconduite=0;
+  $totalarret=0;
+  $trajet=array();             
+  $i=0;
+  $lastdate=0;
+  $vitessemoy=array();
+  $vitessemax=0;
+  $fin=true;  
+  //$contenttabcoordonnee.="tablist[0]= new Array();";  
+  while($tblconduite=fetch($linkconduite)){
+    $trajet[$i]["km"]+=(int)$tblconduite["distance_next"]/1000;
+    //$trajet[$i]["km"]+=(int)$tblconduite["total_distance"]/1000;
+    
+    $vitessemax=($vitessemax>$tblconduite["ground_speed"])?$vitessemax:$tblconduite["ground_speed"];
+    $vitessemoy[]=$tblconduite["ground_speed"];
+    if(((($lastspeed!=$tblconduite["ground_speed"]&&$lastspeed==0)||($lastdistance!=$tblconduite["distance_next"]&&$lastdistance==0))&&$fin==true)){
+      /*
+      print "debut : ".$trajet[$i]["debut"]." ".strtotime($trajet[$i]["debut"])."<br>";
+      print "fin : ".$tblconduite["timestp"]." ".strtotime($tblconduite["timestp"])."<br>";
+      print (strtotime($tblconduite["timestp"])- strtotime($trajet[$i]["debut"]));
+      print "<br>";
+      */
+      if($trajet[$i-1]["fin"]!=0&&((strtotime($tblconduite["timestp"])- strtotime($trajet[$i-1]["fin"]))<$dureeminattente)){
+        $i--;
+      }else{   
+         
+        $fin=false;
+        $contenttabcoordonnee.="tablist[".$i."]= new Array();\n";      
+        $trajet[$i]["km"]=0;
+        $vitessemoy=array();
+        $vitessemax=0;
+        //print $tblconduite["timestp"]."<br>";
+        $trajet[$i]["debut"]=$tblconduite["timestp"];
+        $trajet[$i]["fin"]=0;
+        $trajet[$i]["lat1"]=$tblconduite["latitude"];
+        $trajet[$i]["lon1"]=$tblconduite["longitude"];
+        $debut="<span>".affichedatetime($trajet[$i]["debut"])."</span><br>"; 
+        $tbl_info=adressegps($trajet[$i]["lat1"],$trajet[$i]["lon1"]);
+        if(is_array($tbl_info)){
+          $debut.="<img src=\"".__racineweb__."/tpl/img/lieux/".$tbl_info["icon"]."\"> <span>".$tbl_info["libelle"]."</span>";
+        }else{
+          $debut.=$tbl_info;
+        }
+        $trajet[$i]["debuttxt"]=$debut;  
+      }
+      
+    }
+    if($lastlat!=$tblconduite["latitude"]&&$lastlon!=$tblconduite["longitude"]){
+      $contenttabcoordonnee.="tablist[".$i."].push(new google.maps.LatLng(".$tblconduite["latitude"].",".$tblconduite["longitude"]."));\n";
+    }
+    /*
+    if($fin==false){
+    print "debut : ".$trajet[$i]["debut"]." ".strtotime($trajet[$i]["debut"])."<br>";
+    print "fin : ".$tblconduite["timestp"]." ".strtotime($tblconduite["timestp"])."<br>";
+    print (strtotime($tblconduite["timestp"])- strtotime($trajet[$i]["debut"]));
+    print "<br>";
+    }    */
+    //&&((strtotime($tblconduite["timestp"])- strtotime($lastdate))>$dureeminattente)
+    
+    if((($lastspeed!=$tblconduite["ground_speed"]&&$tblconduite["ground_speed"]==0&&$lastspeed!=0)||($lastdistance!=$tblconduite["distance_next"]&&$tblconduite["distance_next"]==0&&$lastdistance!=0))&&$fin==false){
+      
+        if(array_key_exists("lat1",$trajet[$i])&&$trajet[$i]["lat1"]!=0){
+          $fin=true;
+          $trajet[$i]["fin"]=$tblconduite["timestp"];
+          $trajet[$i]["lat2"]=$tblconduite["latitude"];
+          $trajet[$i]["lon2"]=$tblconduite["longitude"]; 
+          
+          $fin="<span>".affichedatetime($trajet[$i]["fin"])."</span><br>"; 
+          $tbl_info=adressegps($trajet[$i]["lat2"],$trajet[$i]["lon2"]);
+          if(is_array($tbl_info)){
+            $fin.="<img src=\"".__racineweb__."/tpl/img/lieux/".$tbl_info["icon"]."\"> <span>".$tbl_info["libelle"]."</span>";
+          }else{
+            $fin.=$tbl_info;
+          }
+          $trajet[$i]["fintxt"]=$fin;
+          
+          $summoy=0;
+          for($j=0;$j<count($vitessemoy);$j++){
+            $summoy+=$vitessemoy[$j];  
+          }
+          $trajet[$i]["moy"]=vitessekmh($summoy/count($vitessemoy));
+          
+          //v=d/t 
+          /*
+          if(((strtotime($trajet[$i]["fin"])-strtotime($trajet[$i]["debut"]))/3600)!=0){
+            $trajet[$i]["moy"]=round($trajet[$i]["km"]/((strtotime($trajet[$i]["fin"])-strtotime($trajet[$i]["debut"]))/3600));
+          } */
+          $trajet[$i]["max"]=vitessekmh($vitessemax);
+          $trajet[$i]["datediff"]=dateDifference($trajet[$i]["fin"] , $trajet[$i]["debut"] , '%h H %i Min' );
+          $debut=strtotime($trajet[$i]["debut"]);
+          $fin=strtotime($trajet[$i]["fin"]);    
+          //$tbl["conduite"]=round(($fin-$debut)/60);
+          //print $tbl["conduite"];
+          //$trajet[$i]["arret"]=date('h\H i ',(strtotime($trajet[$i]["fin"])-strtotime($trajet[$i]["debut"])-3600-$tbl["conduite"]*60));
+          $i++;
+          
+        }
+      
+    }    
+    $lastspeed=$tblconduite["ground_speed"];
+    $lastdistance=$tblconduite["distance_next"];
+    ///if($lastlat!=$tblconduite["latitude"]&&$lastlon!=$tblconduite["longitude"]&&$lastlon!=0&&$lastlat!=0&&$tblconduite["latitude"]!=0&&$tblconduite["longitude"]!=0){
+    
+    
+    $lastlat=$tblconduite["latitude"];
+    $lastlon=$tblconduite["longitude"];
+    //$tbl_list_vehicule[]=$tblconduite;
+    $lastdate=$tblconduite["timestp"];
+  }
+//print_r($trajet); 
+$sql="select lc.*,tlc.libelle as lib from ".__racinebd__."lieu_compte lc inner join ".__racinebd__."type_lieu_compte tlc on lc.type_lieu_compte_id=tlc.type_lieu_compte_id where compte_id=".$_SESSION["compte_id"]." and lc.supprimer=0 order by lc.libelle";
+$link=query($sql);
+
+while($tbl=fetch($link)){
+  $contenttab.="tab.push(new Array('".$tbl["icon"]."','".$tbl["latitude"]."','".$tbl["longitude"]."','".$tbl["rayon"]."'));";
+} 
+$tbl_list_export=$trajet;
+?>

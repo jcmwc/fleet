@@ -1,0 +1,13 @@
+SetEnv PHP_VER 5
+SetEnv REGISTER_GLOBALS 0
+RewriteEngine ON
+RewriteBase /
+#RewriteRule ^userfiles/file/* /downloadfile.php?file=$1 [L]
+RewriteRule ^userfiles/.*\.(php|php3?|phtml)$ /index.php
+RewriteRule ^upload/.*\.(php|php3?|phtml)$ /index.php
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Rewrite to index.php/URL
+RewriteRule ^(.*)$ index.php/$1 [PT,L]

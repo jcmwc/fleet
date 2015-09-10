@@ -1,0 +1,43 @@
+<?
+//on regarde si aujourd'hui on gére des alarme
+$indicedujour=dayOfWeek(time());
+$sql="select * from ".__racinebd__."alarme_compte_jour where jour_id=".$indicedujour." and alarme_compte_id=".$tbl_alarme_sociale["alarme_compte_id"];
+$link_jour=query($sql);
+if(num_rows($link_jour)>0){
+  //on vérifie le type
+  switch ($tbl_alarme_sociale["typealarme_agence"]) {
+    //Temps d'arrêt insuffisant
+    case 1:
+        echo "i égal 0";
+        break;
+    //Durée de conduite anormale
+    case 2:
+        echo "i égal 0";
+        break;
+    //embauche tardive
+    case 3:
+        echo "i égal 0";
+        break;
+    //distance quotidienne insuffisante
+    case 4:
+        echo "i égal 0";
+        break;
+    //Vitesse moyenne insuffisante
+    case 5:
+        echo "i égal 0";
+        break;
+    //Vitesse moyenne excessive
+    case 6:
+        echo "i égal 0";
+        break;
+    //Temps de conduite journalier excessif
+    case 7:
+        echo "i égal 0";
+        break;
+    //Temps de conduite journalier insuffisant
+    case 8:
+        echo "i égal 0";
+        break;
+}  
+}
+?>

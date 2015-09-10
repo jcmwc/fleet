@@ -1,0 +1,132 @@
+<?
+require("../../require/function.php");
+require("../../require/back_include.php");
+set_time_limit(3600);
+if($_POST["prix"]!=""){
+	//creation du repertoire tmp
+  //@mkdir ($_SERVER["DOCUMENT_ROOT"].__uploaddir__."u".$_SESSION['users_id'], 0775);
+  //deplacement du fichier
+	//move_uploaded_file($_FILES[ext]["tmp_name"],$_SERVER["DOCUMENT_ROOT"].__uploaddir__."u".$_SESSION['users_id']."/".$_FILES["ext"]["name"]);
+  $filename=preg_replace('/[^a-z0-9_\-\.]/i', '_', $_FILES["ext"]["name"]);
+  //if(move_uploaded_file($_FILES["ext"]["tmp_name"],$_SERVER["DOCUMENT_ROOT"].__uploaddir__."u".$_SESSION['users_id']."/".$filename)===false){
+  //sauvegarde en base
+  $ext=getext($_FILES["ext"]["name"]);
+  $sql="insert into ".__racinebd__."prix (montant,montantremise,quantite,ref) value('".addquote($_POST["prix"])."','".addquote($_POST["montantremise"])."','".addquote($_POST["quantite"])."','".addquote($_POST["ref"])."')";
+  $link=query($sql); 
+  $prix_id=insert_id();
+  $querystring="select * from ".__racinebd__."attribut where supprimer=0 order by libelle";
+  $link=query($querystring);
+  while($tbl=fetch($link)){
+    //print "attr_".$tbl["attribut_id"]."<br>";
+    //print $_POST["attr_".$tbl["attribut_id"]];
+    if($_POST["attr_".$tbl["attribut_id"]]!=""&&$_POST["attr_".$tbl["attribut_id"]]!=-1){
+      $sql="insert into ".__racinebd__."valeur_prix (valeur_id,prix_id,attribut_id) value('".addquote($_POST["attr_".$tbl["attribut_id"]])."','".$prix_id."','".$tbl["attribut_id"]."')";
+      query($sql);
+     }  
+  }
+  ?>
+  <script>
+  content='<table width="100%" style="border-bottom:1px solid black" id="table_prix_<?=$prix_id?>">';
+  content+='<input type="hidden" name="listprix[]" value="<?=$prix_id?>"/>';
+  content+='<input type="hidden" id="prix_<?=$prix_id?>" name="prix_<?=$prix_id?>" value="2" />';
+  <?
+  $querystring="select * from ".__racinebd__."attribut where supprimer=0 order by libelle";
+  $link=query($querystring);
+  while($tbl=fetch($link)){
+    if($_POST["attr_".$tbl["attribut_id"]]!=""&&$_POST["attr_".$tbl["attribut_id"]]!=-1){
+      $sql="select * from ".__racinebd__."valeur where valeur_id=".$_POST["attr_".$tbl["attribut_id"]];
+      $link2=query($sql);
+      $tbl2=fetch($link2);    
+      ?>
+      content+='<tr><td><?=$tbl["libelle"]?> :</td><td><?=addslashes($tbl2["libelle"])?></td></tr>';
+    <?}
+  }?>
+  content+='<tr><td>Prix :</td><td><?=$_POST["prix"]?></td></tr>';
+  content+='<tr><td>Prix remisé (0 pas de remise) :</td><td><?=$_POST["montantremise"]?></td></tr>';
+  content+='<tr><td>Quantité :</td><td><?=$_POST["quantite"]?></td></tr>';
+  content+='<tr><td>Référence :</td><td><?=$_POST["ref"]?></td></tr>';
+  content+='<tr><td colspan="2" align="right"><input type="button" name="supprimer" value="<?=$trad["Supprimer"]?>" onclick="document.getElementById(\'table_prix_<?=$prix_id?>\').style.display=\'none\';document.getElementById(\'prix_<?=$prix_id?>\').value=\'1\'"/></td></tr></table>';  
+  top.document.getElementById('listprice').innerHTML+=content;
+  </script>
+  <?
+}
+?>
+<html>
+<head>
+<META http-equiv="Content-Type" Content="text/html; charset=UTF-8">
+<script>
+function validateForm(obj){
+	if(obj.prix.value==""){
+		alert('Veuillez indiquer le prix');
+		obj.prix.focus();
+		return false;
+	}
+	if(obj.quantite.value==""){
+		alert('Veuillez indiquer la quantité');
+		obj.quantite.focus();
+		return false;
+	}
+	if(obj.ref.value==""){
+		alert('Veuillez indiquer la référence');
+		obj.ref.focus();
+		return false;
+	}
+	/*
+	if(obj.description_fichier.value==""){
+		alert('Veuillez indiquer une description');
+		obj.description_fichier.focus();
+		return false;
+	}*/
+	return true;
+}
+</script>
+<style>
+td{font-style:arial;font-size:12px;color:black;font-weight:bold}
+</style>
+</head>
+<body style="margin:0;padding:0;background:#bebebd">
+  <form enctype="multipart/form-data" method="post" action="insertprice.php?nomobj=<?=$_GET["nomobj"]?>" style="margin:0;padding:0" onsubmit="return validateForm(this)">
+  <table width="100%">
+  <?
+  $querystring="select * from ".__racinebd__."attribut where supprimer=0 order by libelle";
+  $link=query($querystring);
+  $i=0;
+  while($tbl=fetch($link)){?>
+  <tr>
+    <td><?=$tbl["libelle"]?> :</td>
+    <td>
+    <select name="attr_<?=$tbl["attribut_id"]?>">
+      <option value="-1"></option>
+      <?
+      $sql="select * from ".__racinebd__."valeur where attribut_id=".$tbl["attribut_id"]." and supprimer=0 order by libelle";
+      $link2=query($sql);
+      while($tbl=fetch($link2)){?>
+      <option value="<?=$tbl["valeur_id"]?>"><?=$tbl["libelle"]?></option>
+      <?}?>
+    </select>
+    </td>
+  </tr>
+  <?}?>
+  <tr>
+    <td>Prix :</td>
+    <td><input type="text" name="prix" value="" /></td>
+  </tr>
+  <tr>
+    <td>Prix remisé (0 pas de remise) :</td>
+    <td><input type="text" name="montantremise" value="" /></td>
+  </tr>
+  <tr>
+    <td>Quantité :</td>
+    <td><input type="text" name="quantite" value="" /></td>
+  </tr>
+  <tr>
+    <td>Référence :</td>
+    <td><input type="text" name="ref" value="" /></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right"><input type="submit" name="valider" value="<?=$trad["valider"]?>" /></td>
+  </tr>
+  </table>
+  </form>
+</body>
+</html>

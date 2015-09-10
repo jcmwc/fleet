@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="fr" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="fr" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="fr" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="fr" class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>mister fleet | situation</title>
+    <meta name="description" content="">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="stylesheet" href="/fleet//tpl/css/screen.css">
+
+
+    <!--[if lte IE 8]><link rel="stylesheet" href="/fleet//tpl/css/ie.css"><![endif]-->
+    <script src="/fleet//tpl/js/modernizr.min.js"></script>
+    
+    
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyC4e8Gsf4BE6SVuZmt7PSdUGXnan-gBx4I"></script>
+    <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&client=gme-rubycom"></script> -->
+    
+    <link href='http://fonts.googleapis.com/css?family=Economica:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='/fleet//tpl/fancybox/jquery.fancybox.css' rel='stylesheet' type='text/css'>
+
+
+  </head>
+  <body>
+        <div class="main-wrapper">
+    <div class="header header-mobile">
+      <div class="logo-mobile">
+        <a href="http://dev.madewithcaffeine.com/fleet/index.php" class="link-home-mobile"><img alt="Logo Mister fleet" src="/fleet//tpl/img/logo-mobile.png"></a>
+
+        <a href="#" class="btn-menu-mobile"><img alt="Menu" src="/fleet//tpl/img/btn-menu-mobile.png"></a>
+      </div>
+      <div class="menu-wrapper">
+        <div class="logo">
+          <!--<a href=" http://dev.madewithcaffeine.com/fleet/index.php"><img src="/fleet//tpl/img/logo.png"></a>-->
+          <img src="/fleet//tpl/img/logo.png">
+        </div>
+        <div class="main_menu">
+          <p class="message_header active_menu">Bienvenue, raison</p>
+          <div class="main_navigation">
+            <ul class="menu">
+      <!--    <li><a href="http://dev.madewithcaffeine.com/fleet/index.php" >Accueil</a></li> -->
+                            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/situation" >Situation</a></li>
+                            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/cartographie" >Cartographie</a></li>
+                            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/rapport" >Rapport véhicule</a></li>
+              
+            </ul>
+            <div class="second_navigation">
+              <ul class="menu">
+                                <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/rapports_de_flotte" >Rapport de flotte</a></li>
+                                <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte" class="acitve_menu">Configuration</a></li>
+                                <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/deco">Déconnexion</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- DEBUT CONTAINER -->
+<div class="container">
+ 
+  <!-- DEBUT MAIN CONTENT TOP -->
+  <div class="main_content_top">
+    <div class="main_resize">
+      <div class="resize parambloc">
+        <h1 class="bcktitle ajust_title">Parametre du compte</h1>
+        <ul>
+          <li class="font-bold"><a href="#" class='active_menu02 see_more_param2'>Administration du site</a></li>
+          <div class="relative_info_bloc ss_img_bloc">
+            <div class="ss_menu">
+                          <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=default" >Agences</a></li>
+                          
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=utilisateurs" >Utilisateurs</a></li>            
+                          
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=typeslieux" >Types de lieux</a></li>
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=lieux" >Lieux</a></li>
+                                      <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=tv" class="active_menu02">Types de véhicules</a></li>
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=catveh" >Catégories de véhicules</a></li>
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=veh" >Véhicules</a></li>
+                        </div>
+            <img class="see_more_param" src="/fleet//tpl/img/plus_ico.png" alt="See more">
+          </div>
+        </ul>
+                        <ul>
+          <li class="font-bold alarmes_menu_li"><a href="#" class=' see_more_param2'>Alarmes</a></li>
+          <div class="relative_info_bloc ss_img_bloc">
+           <div class="ss_menu">
+            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=alarme" >Alarmes Sociales</a></li>
+            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=alarme2" >Alarmes Operationelles</a></li>
+            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=alarm-vit" >Alarmes de vitesse</a></li>            
+          </div>
+          <img class="see_more_param" src="/fleet//tpl/img/plus_ico.png" alt="See more">
+          </div>
+        </ul>
+                                        <ul>
+          <li class="font-bold"><a href="#" class=' see_more_param2'>Entretien</a></li>
+          <div class="relative_info_bloc ss_img_bloc">
+            <div class="ss_menu ">
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=tyentretien" >Modification des types d'entretien</a></li>
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=alarm-entretien" >Alarmes d'entretien</a></li>
+            </div>
+            <img class="see_more_param" src="/fleet//tpl/img/plus_ico.png" alt="See more">
+          </div>
+          </ul>
+                        <ul>
+          <li class="font-bold"><a href="#" class=' see_more_param2'>Gestion du compte</a></li>
+          <div class="relative_info_bloc ss_img_bloc">
+          <div class="ss_menu ">
+            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=mdp" >Modifier mon mot de passe</a></li>
+            <!--
+            <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=def-pref" >Définir mes préférences</a></li>
+            -->
+          </div>
+          <img class="see_more_param" src="/fleet//tpl/img/plus_ico.png" alt="See more">
+          </div>
+          </ul>
+          <ul>
+            <li class="font-bold"><a href="#" class=' see_more_param2'>Paramètres globaux</a></li>
+            <div class="relative_info_bloc ss_img_bloc">
+            <div class="ss_menu ">
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=etat-moteur" >Personnalisation des états moteur</a></li>
+              <!-- <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=etat-sociaux" >Personnalisation des états sociaux</a></li>  -->
+              <li><a href="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=preference" >Préférences</a></li>
+            </div>
+          <img class="see_more_param" src="/fleet//tpl/img/plus_ico.png" alt="See more">
+        </div>
+        </ul>
+    </div>
+</div> 
+    <div class="main_resize backgroundbloc tv_bloc relative_info_bloc">
+      <div class="resize clearfix">
+        <h1 class="bcktitle ajust_title title_agence">Type de véhicule</h1>
+        <div class="infobloc_param clearfix">
+          <div class="left font-bold">Nombre de types de véhicule enregistrés :  3</div>
+        </div>
+                <div class="infobloc_param02">
+          <div>
+            <p>Identifiant : <span> 2 </span></p>
+            <p>Nom : <span>Camion</span></p>
+            <p>Icône : <span> <img src="/fleet//tpl/img/vehicules/supercamion_icon.png"> </span></p>
+            <p>Consommation (L/100km) : <span> 0.00</span></p>
+            <p>Vitesse d'attente (Km/h) : <span> 0</span></p>
+          </div>
+          <div class="clearfix">
+            <form method="post" action="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=tv#bas">
+            <input type="hidden" name="id" value="2" />
+            <input class="right submit_butt" type="submit" value="modifier">
+            </form>
+            <form method="post" action="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=tv" onsubmit="return deletetv()">
+            <input type="hidden" name="id" value="2" />
+            <input type="hidden" name="mode" value="delete" />
+            <input id="delete_butt_tv" class="right submit_butt input_supp_param_user" type="submit" value="supprimer">
+            </form>
+          </div>
+        </div>
+                <div class="infobloc_param02">
+          <div>
+            <p>Identifiant : <span> 3 </span></p>
+            <p>Nom : <span>Utilitaire</span></p>
+            <p>Icône : <span> <img src="/fleet//tpl/img/vehicules/utilitaire-icon.png"> </span></p>
+            <p>Consommation (L/100km) : <span> 0.00</span></p>
+            <p>Vitesse d'attente (Km/h) : <span> 0</span></p>
+          </div>
+          <div class="clearfix">
+            <form method="post" action="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=tv#bas">
+            <input type="hidden" name="id" value="3" />
+            <input class="right submit_butt" type="submit" value="modifier">
+            </form>
+            <form method="post" action="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=tv" onsubmit="return deletetv()">
+            <input type="hidden" name="id" value="3" />
+            <input type="hidden" name="mode" value="delete" />
+            <input id="delete_butt_tv" class="right submit_butt input_supp_param_user" type="submit" value="supprimer">
+            </form>
+          </div>
+        </div>
+                <div class="infobloc_param02">
+          <div>
+            <p>Identifiant : <span> 1 </span></p>
+            <p>Nom : <span>Voiture</span></p>
+            <p>Icône : <span> <img src="/fleet//tpl/img/vehicules/car_icon.png"> </span></p>
+            <p>Consommation (L/100km) : <span> 0.00</span></p>
+            <p>Vitesse d'attente (Km/h) : <span> 0</span></p>
+          </div>
+          <div class="clearfix">
+            <form method="post" action="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=tv#bas">
+            <input type="hidden" name="id" value="1" />
+            <input class="right submit_butt" type="submit" value="modifier">
+            </form>
+            <form method="post" action="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=tv" onsubmit="return deletetv()">
+            <input type="hidden" name="id" value="1" />
+            <input type="hidden" name="mode" value="delete" />
+            <input id="delete_butt_tv" class="right submit_butt input_supp_param_user" type="submit" value="supprimer">
+            </form>
+          </div>
+        </div>
+                <form class="infobloc_param02 clearfix" method="post" action="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=tv#bas">
+          <input type="hidden" name="mode" value="add" />
+          <input id="ajout_tv_button" class="right submit_butt" type="submit" value="Ajouter un type de véhicule">
+        </form>
+            
+        <br><br>     
+      </div>
+      <div id="nv_tv_bloc" class="resize relative_info_bloc" style="display:block">
+        <a name="bas"></a>
+        <form id="formTv" name="formTv" action="http://dev.madewithcaffeine.com/fleet/index.php/compte/compte?template=tv" method="post" onsubmit="return validerTv();">
+                      <input type="hidden" name="id" value="3" />
+            <input type="hidden" name="mode" value="modif" />
+            <h1 class="bcktitle ajust_title title_nv_tl">Modification d'un type de véhicule</h1>
+                      <div class="decale">
+              <div class="infobloc_tv">
+                <label class="left font-bold" for="nametv">Nom :</label>
+                <input id="nametv" class="right spec_inp_tv" name="libelle" type="text" value="Utilitaire">
+              </div>
+              <div class="infobloc_tv">
+                <label class="left font-bold" for="consom_tv">Consommation :</label>
+                <span class="right">(L/100km)</span>
+                <input id="consom_tv" class="right" name="consommation" type="text" value="0.00">
+              </div>
+              <div class="infobloc_tv">
+                <label class="left font-bold" for="vit_tv">Vitesse d'attente :</label>
+                <span class="right">(Km/h)</span>
+                <input id="vit_tv" class="right" name="vitesseattente" type="text" value="0">
+              </div>
+              <div class="bloc_change_icon">
+                <label class="left font-bold" for="icon">Icône :</label>
+                <input type="hidden" name="icon" id="icon" value="utilitaire-icon.png" />
+                                <img class="left" id="imgicon" src="/fleet//tpl/img/vehicules/utilitaire-icon.png">
+                                <div class="modif_icon left">Changer d'icône</div> 
+             </div>     
+              <div class="infobloc_tv">
+                <input class="right submit_butt" type="submit" value="Valider">
+                <input id="cancel_tv_button" class="right submit_butt" type="button" value="Annuler">
+              </div>
+            </div>
+        </form>
+              <div class="modal_test">
+        <div class="position_info_bloc">
+          <h1>Icônes</h1>
+                      <div class="spec_icon_zone">
+                        <a href="javascript:chooseicon('bus_icon.bmp')"><img class="left" src="/fleet//tpl/img/vehicules/bus_icon.bmp"></a>
+                      <a href="javascript:chooseicon('bus_icon.png')"><img class="right" src="/fleet//tpl/img/vehicules/bus_icon.png"></a>
+                      </div>
+                        <div class="spec_icon_zone">
+                        <a href="javascript:chooseicon('camion_icon.png')"><img class="left" src="/fleet//tpl/img/vehicules/camion_icon.png"></a>
+                      <a href="javascript:chooseicon('car_icon.png')"><img class="right" src="/fleet//tpl/img/vehicules/car_icon.png"></a>
+                      </div>
+                        <div class="spec_icon_zone">
+                        <a href="javascript:chooseicon('moto_icon.png')"><img class="left" src="/fleet//tpl/img/vehicules/moto_icon.png"></a>
+                      <a href="javascript:chooseicon('supercamion_icon.png')"><img class="right" src="/fleet//tpl/img/vehicules/supercamion_icon.png"></a>
+                    </div>
+          <!--
+          <div class="spec_icon_zone">
+            <img class="left"src="/fleet//tpl/img/vehicules/bus_icon.png">
+            <img class="right"src="/fleet//tpl/img/vehicules/supercamion_icon.png">
+          </div>
+          <div class="spec_icon_zone">
+            <img class="left"src="/fleet//tpl/img/vehicules/moto_icon.png">
+          </div>
+          -->
+          <img src="/fleet//tpl/img/cross29.png" class="position_absolute close_img">
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+<!-- FIN MAIN CONTENT TOP -->
+<!-- DEBUT CONTAINER RESIZE -->
+<!-- FIN CONTAINER RESIZE -->
+</div>
+<!-- FIN CONTAINER -->
+
+
+    </div><!-- end .main-wrapper -->
+   <script src="/fleet//tpl/js/app.js"></script>
+    
+    <script src="/fleet//tpl/js/parametre-tv.js"></script>
+    <script src="/fleet//tpl/js/parametre-menu.js"></script>
+    
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<script>  
+  racineimg="/fleet/";
+  (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+  function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+  e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+  e.src='//www.google-analytics.com/analytics.js';
+  r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+  ga('create','UA-XXXXX-1');ga('send','pageview');
+</script>
+
+  </body>
+</html>

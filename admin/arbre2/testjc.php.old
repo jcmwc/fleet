@@ -1,0 +1,139 @@
+<?
+require("../require/function.php");
+require("../require/back_include.php");
+require("../require/function_arbre2.php");
+if($_GET["lang"]){
+  $requete_langue = "select langue_id from ".__racinebd__."langue where shortlib = '".$_GET["lang"]."'";
+  $link_langue=query($requete_langue);
+  $nombre_langue = num_rows($link_langue);
+  if($nombre_langue > 0){
+    while ($ligne_langue=fetch($link_langue)){
+      $_POST["langue_id"] = $ligne_langue["langue_id"];
+    }
+  } else {
+      $_POST["langue_id"] = 1;
+  }
+} else {
+    $_POST["langue_id"] = 1;
+}
+?>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+	<title>Phantom</title>
+
+	<script src="jquery/jquery.js" type="text/javascript"></script>
+	<script src="jquery/jquery-ui.custom.js" type="text/javascript"></script>
+	<script src="jquery/jquery.cookie.js" type="text/javascript"></script>
+	<link href="src/skin-vista/ui.dynatree.css" rel="stylesheet" type="text/css">
+	<script src="src/jquery.dynatree.jc.js" type="text/javascript"></script>
+
+
+
+<script type="text/javascript">
+var struct = [
+{
+"key":"root1",
+"title":"<?=$trad["Phantom"]?>",
+"icon":"base.gif",
+"unselectable":true,
+"children":[
+
+<?php
+listnoeud2("null",$_POST["langue_id"]);
+?>
+]
+},
+{
+"key":"pb",
+"title":"<?=$trad["Poubelle"]?>",
+"icon":"trash.gif",
+"unselectable":true,
+"children":[
+<?php
+listnoeud2('pb',$_POST["langue_id"]);
+?>
+]
+}
+];
+
+
+	$(function(){
+
+		// --- Initialize sample trees
+		$("#tree").dynatree({
+      //persist: true,
+			title: "Phantom",
+      imagePath:'<?=__reparbre__?>imgs/',
+			fx: { height: "toggle", duration: 200 },
+			autoFocus: false, // Set focus to first child, when expanding or lazy-loading.
+			onActivate: function(node) {
+				//$("#echoActive").text("" + node + " (" + node.getKeyPath()+ ")");
+			},
+      children:struct,
+			onLazyRead: function(node){
+      //alert('ok');
+				// In real life we would call something like this:
+//            	node.appendAjax({
+//            	    url: "/<?=__reparbre__?>sampleOpen1JC.php?la_langue=<?=$_POST["langue_id"]?>",
+//		            data: {key: node.data.key,
+//            		       mode: "funnyMode"
+//                         }
+//              });
+				// .. but here we use a local file instead:
+				//node.appendAjax({
+				//	url: "sample-data2.json",
+					// We don't want the next line in production code:
+				//	debugLazyDelay: 750
+				//});
+        //alert(node.data.key)
+        //alert(<?=$_POST["langue_id"]?>)
+        node.appendAjax({
+            	  url: "/bailleul/dev2//admin/arbre2/sampleOpen1JC.php",
+		            data: {key: node.data.key,langue_id: <?=$_POST["langue_id"]?>}});
+			}
+		});
+		$("#btnReloadActive").click(function(){
+			var node = $("#tree").dynatree("getActiveNode");
+			if( node && node.isLazy() ){
+				node.reloadChildren(function(node, isOk){
+				});
+			}else{
+				alert("Please activate a lazy node first.");
+			}
+	   });
+		$("#btnLoadKeyPath").click(function(){
+			var tree = $("#tree").dynatree("getTree");
+			// Make sure that node #_27 is loaded, by traversing the parents.
+			// The callback is executed for every node as we go:
+			tree.loadKeyPath("/folder4/_23/_26/_27", function(node, status){
+				if(status == "loaded") {
+					// 'node' is a parent that was just traversed.
+					// If we call expand() here, then all nodes will be expanded
+					// as we go
+					node.expand();
+				}else if(status == "ok") {
+					// 'node' is the end node of our path.
+					// If we call activate() or makeVisible() here, then the
+					// whole branch will be exoanded now
+					node.activate();
+				}
+			});
+	   });
+		
+	});
+</script>
+</head>
+<body class="example">
+<h1>Phantom</h1>
+<div id="tree"><!-- When using initAjax, it may be nice to put a throbber here, that spins until the initial content is loaded: -->
+</div>
+<div>Active node: <span id="echoActive">-</span></div>
+<p>
+	<button id="btnReloadActive">Reload active node...</button>
+	<button id="btnLoadKeyPath">Load node by path '/folder4/_23/_26/_27'...</button>
+</p>
+</body>
+</html>
